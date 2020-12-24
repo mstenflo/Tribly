@@ -1,0 +1,10 @@
+.auth-container {
+  width: 600px;
+  margin: auto;
+  overflow: hidden;
+  border: 2px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 3rem;
+  background-color: white;
+  position: fixed;
+}
