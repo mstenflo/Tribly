@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { setAlert } from '../../actions/alert';
 import './auth.css';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
 
   const [formData, setFormData] = useState({
     name: '',
@@ -18,15 +21,16 @@ const Register = () => {
   const onSubmit = e => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do not match')
+      setAlert('Passwords do not match', 'danger');
     } else {
       console.log(formData);
     }
   }
   
   return (
-    <div className="bg-dark full-screen">
-      <div className="auth-container text-dark">
+    <Fragment>
+    {/* <div className="bg-dark full-screen">
+      <div className="auth-container text-dark"> */}
         <h1 className="large text-primary">Sign Up</h1>
         <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
         <form className="form" action="create-profile.html" onSubmit={e => onSubmit(e)}>
@@ -70,14 +74,19 @@ const Register = () => {
               required
             />
           </div>
-          <input type="submit" className="btn btn-light" value="Register" />
+          <input type="submit" className="btn btn-primary" value="Register" />
         </form>
         <p className="my-1 small">
           Already have an account? <Link to='/login'>Sign In</Link>
         </p>
-      </div>
-    </div>
+      {/* </div>
+    </div> */}
+    </Fragment>
   );
 }
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired
+}
+
+export default connect(null, { setAlert })(Register);
