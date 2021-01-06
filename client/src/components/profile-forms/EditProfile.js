@@ -11,12 +11,9 @@ const EditProfile = ({
   history,
 }) => {
   const [formData, setFormData] = useState({
-    company: '',
     website: '',
     location: '',
-    status: '',
     skills: '',
-    githubusername: '',
     bio: '',
     twitter: '',
     facebook: '',
@@ -31,13 +28,9 @@ const EditProfile = ({
     getCurrentProfile();
 
     setFormData({
-      company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
       location: loading || !profile.location ? '' : profile.location,
-      status: loading || !profile.status ? '' : profile.status,
-      skills: loading || !profile.skills ? '' : profile.skills.join(','),
-      githubusername:
-        loading || !profile.githubusername ? '' : profile.githubusername,
+      skills: loading || !profile.skills ? '' : profile.skills.join(', '),
       bio: loading || !profile.bio ? '' : profile.bio,
       twitter: loading || !profile.social ? '' : profile.social.twitter,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
@@ -48,12 +41,9 @@ const EditProfile = ({
   }, [loading, getCurrentProfile]);
 
   const {
-    company,
     website,
     location,
-    status,
     skills,
-    githubusername,
     bio,
     twitter,
     facebook,
@@ -78,34 +68,6 @@ const EditProfile = ({
       </p>
       <small>* = required field</small>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <select name='status' value={status} onChange={(e) => onChange(e)}>
-            <option>* Select Professional Status</option>
-            <option value='Developer'>Developer</option>
-            <option value='Junior Developer'>Junior Developer</option>
-            <option value='Senior Developer'>Senior Developer</option>
-            <option value='Manager'>Manager</option>
-            <option value='Student or Learning'>Student or Learning</option>
-            <option value='Instructor'>Instructor or Teacher</option>
-            <option value='Intern'>Intern</option>
-            <option value='Other'>Other</option>
-          </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Company'
-            name='company'
-            value={company}
-            onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            Could be your own company or one you work for
-          </small>
-        </div>
         <div className='form-group'>
           <input
             type='text'
@@ -133,26 +95,12 @@ const EditProfile = ({
         <div className='form-group'>
           <input
             type='text'
-            placeholder='* Skills'
             name='skills'
             value={skills}
             onChange={(e) => onChange(e)}
           />
           <small className='form-text'>
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Github Username'
-            name='githubusername'
-            value={githubusername}
-            onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            If you want your latest repos and a Github link, include your
-            username
           </small>
         </div>
         <div className='form-group'>

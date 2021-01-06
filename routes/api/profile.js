@@ -27,10 +27,6 @@ router.post(
   '/',
   [
     auth,
-    [
-      check('status', 'Status is required').not().isEmpty(),
-      check('skills', 'Skills is required').not().isEmpty()
-    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -43,7 +39,7 @@ router.post(
       website,
       location,
       bio,
-      status,
+      title,
       githubusername,
       skills,
       youtube,
@@ -60,7 +56,7 @@ router.post(
     if (website) profileFields.website = website;
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
-    if (status) profileFields.status = status;
+    if (title) profileFields.title = title;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
       profileFields.skills = skills.split(',').map((skill) => skill.trim());
@@ -136,17 +132,7 @@ router.delete('/', auth, async (req, res) => {
 });
 
 router.put(
-  '/experience',
-  [
-    auth,
-    [
-      check('title', 'Title is required').not().isEmpty(),
-      check('company', 'Company is required').not().isEmpty(),
-      check('from', 'From date is required').not().isEmpty()
-    ],
-  ],
-  
-  async (req, res) => {
+  '/experience', auth, async (req, res) => {
     const errors = validationResult(req);
     if (!errors) {
       return res.status(400).json({ errors: errors.array() });
@@ -203,12 +189,7 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
   }
 });
 
-router.put('/education', [auth, [
-  check('school', 'School is required').not().isEmpty(),
-  check('degree', 'Degree is required').not().isEmpty(),
-  check('fieldofstudy', 'Field of study is required').not().isEmpty(),
-  check('from', 'From date is required').not().isEmpty()
-]], async (req, res) => {
+router.put('/education', auth, async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

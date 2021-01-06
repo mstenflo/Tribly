@@ -14,13 +14,11 @@ const ProfileSchema = new mongoose.Schema({
   location: {
     type: String
   },
-  status: {
+  title: {
     type: String,
-    required: true
   },
   skills: {
-    type: [String],
-    required: true
+    type: [String]
   },
   bio: {
     type: String

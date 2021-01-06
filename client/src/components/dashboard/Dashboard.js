@@ -8,35 +8,36 @@ import DashboardActions from './DashboardActions';
 
 const Dashboard = ({
   getCurrentProfile,
-  auth: { user },
+  auth,
   profile: { profile, loading }
 }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
-  
-  return loading && profile === null ? (
-    <Spinner />
-  ) : (
-      <Fragment>
-        <h1 className="large text-primary">Dashboard</h1>
-        <p className="lead">
-          <i className="fas fa-user"></i> Welcome {user && user.name}
-        </p>
-        {profile !== null ? (
+  }, [getCurrentProfile]);
+  console.log(profile)
+  return (
+    <Fragment>
+      {loading && profile === null ? (
+        <Spinner />
+      ) : (
           <Fragment>
-            <DashboardActions />
-          </Fragment>
-        ) : (
-            <Fragment>
-              <p>You have not set up a profile, please add some info</p>
-              <Link to='/create-profile' className="btn btn-primary my-1">
-                Create Profile
+            {profile !== null ? (
+              <Fragment>
+                <DashboardActions />
+              </Fragment>
+            ) : (
+                <Fragment>
+                  <p>You have not set up a profile, please add some info</p>
+                  <Link to='/create-profile' className="btn btn-primary my-1">
+                    Create Profile
               </Link>
-            </Fragment>
-          )}
-      </Fragment>
-    );
+                </Fragment>
+              )}
+          </Fragment>
+        )
+      }
+    </Fragment>
+    )
 };
 
 Dashboard.propTypes = {
