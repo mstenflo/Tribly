@@ -1,40 +1,51 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import S3Config from '../../config';
+import S3FileUpload from 'react-s3';
 import { connect } from 'react-redux';
-import { createProfile, getCurrentProfile } from '../../actions/profile';
+import { createProfile, getCurrentProfile, addAvatar } from '../../actions/profile';
 
 const EditProfile = ({
   profile: { profile, loading },
+  auth: { user },
   createProfile,
   getCurrentProfile,
+  addAvatar,
   history,
 }) => {
   const [formData, setFormData] = useState({
     website: '',
+    avatar: '',
     location: '',
     skills: '',
     bio: '',
     twitter: '',
     facebook: '',
-    linkedin: '',
     youtube: '',
     instagram: '',
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
+  const config = {
+    bucketName: S3Config.S3Bucket,
+    region: S3Config.S3Region,
+    accessKeyId: S3Config.S3AccessKeyID,
+    secretAccessKey: S3Config.S3SecretAccessKey
+  }
+  
   useEffect(() => {
     getCurrentProfile();
 
     setFormData({
       website: loading || !profile.website ? '' : profile.website,
+      avatar: loading || !profile.avatar ? '' : profile.avatar,
       location: loading || !profile.location ? '' : profile.location,
       skills: loading || !profile.skills ? '' : profile.skills.join(', '),
       bio: loading || !profile.bio ? '' : profile.bio,
       twitter: loading || !profile.social ? '' : profile.social.twitter,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
-      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
@@ -42,31 +53,61 @@ const EditProfile = ({
 
   const {
     website,
+    avatar,
     location,
     skills,
     bio,
     twitter,
     facebook,
-    linkedin,
     youtube,
     instagram,
   } = formData;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    if (e.target.files) {
+      S3FileUpload.uploadFile(e.target.files[0], config, { mode: 'no-cors' })
+        .then(data => {
+          setFormData({ ...formData, avatar: data.location });
+        })
+        .catch(err => {
+          alert(err);
+        });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(formData)
+    if (formData.profilepic) {
+      addAvatar(formData);
+    }
     createProfile(formData, history, true);
   };
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Edit Your Profile</h1>
+      <div className="flexit">
+        <h1 className='large text-primary'>Edit Your Profile</h1>
+        <div className="avatar">
+          {
+            !avatar ?
+              <img src={`https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png`} alt="avatar" /> : 
+              <img src={avatar} id="avatar" alt="avatar"/>
+          }
+          <input
+            type="file"
+            name="profilepic"
+            id="profilepic"
+            accept="image/*"
+            onChange={e => onChange(e)}
+            placeholder="add an image" />
+        </div>
+      </div>
       <p className='lead'>
         <i className='fas fa-user' /> Add some changes to your profile
       </p>
-      <small>* = required field</small>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <input
@@ -160,17 +201,6 @@ const EditProfile = ({
             </div>
 
             <div className='form-group social-input'>
-              <i className='fab fa-linkedin fa-2x' />
-              <input
-                type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                value={linkedin}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-
-            <div className='form-group social-input'>
               <i className='fab fa-instagram fa-2x' />
               <input
                 type='text'
@@ -196,12 +226,14 @@ EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
+  addAvatar: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   profile: state.profile,
+  auth: state.auth
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+export default connect(mapStateToProps, { createProfile, getCurrentProfile, addAvatar })(
   withRouter(EditProfile)
 );

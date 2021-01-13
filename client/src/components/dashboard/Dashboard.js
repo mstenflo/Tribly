@@ -14,7 +14,6 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
-  console.log(profile)
   return (
     <Fragment>
       {loading && profile === null ? (
