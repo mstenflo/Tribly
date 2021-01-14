@@ -8,6 +8,7 @@ import './Navbar.css';
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
+      <li><Link to="/profiles">Contributors</Link></li>
       <li>
       <Link to="/dashboard">
           <span className="hide-sm">{user && user.name}</span>
@@ -24,7 +25,6 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
   const guestLinks = (
     <ul>
-      <li><a href="#!">Developers</a></li>
       <li><Link to="/register">Register</Link></li>
       <li><Link to="/login">Login</Link></li>
     </ul>

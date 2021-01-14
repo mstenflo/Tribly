@@ -8,9 +8,6 @@ const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
-// const S3_BUCKET = config.get('S3Bucket');
-// const AWS_ACCESS_KEY_ID = config.get('S3AccessKeyID');
-// const AWS_SECRET_ACCESS_KEY = config.get('S3SecretAccessKey');
 
 router.get('/me', auth, async (req, res) => {
   try {
@@ -85,7 +82,7 @@ router.post('/', [auth], async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar'], 'User');
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
     res.json(profiles);
   } catch (error) {
     console.error(error.message);
@@ -95,7 +92,7 @@ router.get('/', async (req, res) => {
 
 router.get('/user/:user_id', async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar'], 'User');
+    const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar'], 'user');
 
     if (!profile) {
       return res.status(400).json({ msg: 'Profile not found' });
@@ -122,54 +119,6 @@ router.delete('/', auth, async (req, res) => {
     console.error(error.message);
     res.status(500).send('Server Error');
   }
-});
-
-router.post('/photo', [auth], async (req, res) => {
-
-  console.log('avatar', req.body.profilepic);
-  // try {
-  // console.log('user: ', user)
-  //   const user = await User.findById(req.user.id);
-    
-  //   if (!user) {
-  //     return res.status(404).json({ msg: 'User not found' });
-  //   }
-    
-  //   if (!req.body.avatar) {
-  //     res.status(400).json({ errors: [{ msg: 'Please upload a file' }] });
-  //   }
-    
-    // const file = req.files.file;
-
-    // if (file.mimetype.startsWith('image')) {
-    //   res.status(400).json({ errors: [{ msg: 'Images only' }] });
-    // }
-
-    // file.name = `photo_${req.user.id}${path.parse(file.name).ext}`;
-
-    // AWS.config.update({
-    //   accessKeyId: AWS_ACCESS_KEY_ID,
-    //   secretAccessKey: AWS_SECRET_ACCESS_KEY
-    // });
-
-    // const s3 = new AWS.S3();
-
-    // const params = {
-    //   Bucket: S3_BUCKET,
-    //   Key: file.name,
-    //   Body: file.data
-    // }
-
-    // s3.upload(params, function (err, data) {
-    //   console.log(err, data);
-    // });
-    
-    // let avatar = await User.findByIdAndUpdate(req.params.id, { avatar: file.name });
-    // res.json(avatar);
-  // } catch (error) {
-  //   console.error(error.message);
-  //   res.status(500).send('Server Error');
-  // }
 });
 
 module.exports = router;

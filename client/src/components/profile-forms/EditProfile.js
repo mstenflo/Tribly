@@ -4,14 +4,13 @@ import PropTypes from 'prop-types';
 import S3Config from '../../config';
 import S3FileUpload from 'react-s3';
 import { connect } from 'react-redux';
-import { createProfile, getCurrentProfile, addAvatar } from '../../actions/profile';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
 
 const EditProfile = ({
   profile: { profile, loading },
   auth: { user },
   createProfile,
   getCurrentProfile,
-  addAvatar,
   history,
 }) => {
   const [formData, setFormData] = useState({
@@ -79,10 +78,6 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
-    if (formData.profilepic) {
-      addAvatar(formData);
-    }
     createProfile(formData, history, true);
   };
 
@@ -226,7 +221,6 @@ EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  addAvatar: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -234,6 +228,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile, addAvatar })(
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
   withRouter(EditProfile)
 );

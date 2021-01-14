@@ -320,6 +320,10 @@ button {
   border-radius: 50%;
 }
 
+.round-img {
+  border-radius: 50%;
+}
+
 input[type='file'] {
   color: transparent;
 }
