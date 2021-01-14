@@ -89,6 +89,12 @@ img {
   color: var(--dark-color);
 }
 
+.line {
+  height: 1px;
+  background: #ccc;
+  margin: 1.5rem 0;
+}
+
 
 /* Padding */
 
