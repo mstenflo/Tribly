@@ -1,0 +1,9 @@
+.group {
+  display: grid;
+  align-items: center;
+  padding: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}

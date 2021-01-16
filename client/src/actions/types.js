@@ -11,3 +11,7 @@ export const GET_PROFILE = 'GET_PROFILE';
 export const GET_PROFILES = 'GET_PROFILES';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const ADD_GROUP = 'ADD_GROUP';
+export const GET_GROUP = 'GET_GROUP';
+export const GET_GROUPS = 'GET_GROUPS';
+export const GROUP_ERROR = 'GROUP_ERROR';

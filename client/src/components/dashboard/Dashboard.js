@@ -14,30 +14,26 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
-  return (
-    <Fragment>
-      {loading && profile === null ? (
-        <Spinner />
-      ) : (
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
+      <Fragment>
+        {profile !== null ? (
           <Fragment>
-            {profile !== null ? (
-              <Fragment>
-                <DashboardActions />
-              </Fragment>
-            ) : (
-                <Fragment>
-                  <p>You have not set up a profile, please add some info</p>
-                  <Link to='/create-profile' className="btn btn-primary my-1">
-                    Create Profile
-              </Link>
-                </Fragment>
-              )}
+            <DashboardActions />
           </Fragment>
-        )
-      }
-    </Fragment>
+        ) : (
+            <Fragment>
+              <p>You have not set up a profile, please add some info</p>
+              <Link to='/create-profile' className="btn btn-primary my-1">
+                Create Profile
+          </Link>
+            </Fragment>
+          )}
+      </Fragment>
     )
-};
+  }
+      
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,

@@ -21,7 +21,13 @@ const ProfileItem = ({ profile: {
       </Link>
       <div>
         <h2>{name}</h2>
-        {website && <p><a href={website} target='_blank'><i className="fas fa-globe fa"></i> Website</a></p>}
+        {website &&
+          <p>
+            <a href={website} target='_blank' rel="noopener noreferrer">
+            <i className="fas fa-globe fa"></i> Website
+            </a>
+          </p>
+        }
         {bio && <p>{bio}</p>}
         <p className="my-1">{location && <span>{location}</span>}</p>
         <Link to={`/profile/${_id}`} className="btn btn-primary">
