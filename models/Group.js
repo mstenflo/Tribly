@@ -6,14 +6,7 @@ const GroupSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  contributors: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-      }
-    }
-  ],
+  contributors: [String],
   name: {
     type: String,
     required: true

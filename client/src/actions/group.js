@@ -35,6 +35,23 @@ export const getGroup = id => async dispatch => {
   }
 }
 
+export const getMyGroups = (id) => async dispatch => {
+  try {
+    const res = await axios.get(`api/groups/`).filter(group => !group.contributors.includes(id))
+    console.log(res)
+
+    dispatch({
+      type: GET_GROUPS,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
+
 export const createGroup = (formData, history, edit = false) => async dispatch => {
   try {
     const config = {

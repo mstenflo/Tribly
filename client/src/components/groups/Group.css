@@ -1,5 +1,6 @@
 .group {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 1rem;
   line-height: 1.8;

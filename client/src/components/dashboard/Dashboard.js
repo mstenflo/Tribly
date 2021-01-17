@@ -5,10 +5,11 @@ import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import DashboardActions from './DashboardActions';
+import MyGroups from '../groups/MyGroups';
 
 const Dashboard = ({
   getCurrentProfile,
-  auth,
+  auth: { user },
   profile: { profile, loading }
 }) => {
   useEffect(() => {
@@ -30,11 +31,17 @@ const Dashboard = ({
           </Link>
             </Fragment>
           )}
+        {
+          user !== null ? (
+          user.groups && user.groups.length > 0 ? 
+            <MyGroups groups={user.groups} /> :
+            null
+          ) : null
+        }
       </Fragment>
     )
   }
       
-
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

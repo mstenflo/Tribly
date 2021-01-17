@@ -23,23 +23,26 @@ router.post('/', [auth, [
 ]], async (req, res) => {
     
   try {
-    const user = await User.findById(req.user.id).select('-password');
     
     const code = new CodeGenerator();
     const pattern = '******';
     const howMany = 1;
     const options = {};
     const newCode = code.generateCodes(pattern, howMany, options);
-
+    
     const newGroup = new Group({
       admin: req.user.id,
       name: req.body.name,
       description: req.body.description,
       inviteCode: newCode[0],
-      contributors: [{ user: req.user.id }]
+      contributors: [req.user.id]
     });
-
+    
+    
     const group = await newGroup.save();
+    const user = await User.findById(req.user.id);
+    user.groups.push({ id: group._id, name: group.name });
+    await user.save();
 
     res.json(group);
   } catch (err) {
@@ -47,13 +50,5 @@ router.post('/', [auth, [
     res.status(500).send('Server Error');
   }
 });
-
-// router.post('/join', [auth], async (req, res) => {
-//   try {
-    
-//   } catch (err) {
-    
-//   }
-// })
 
 module.exports = router;
