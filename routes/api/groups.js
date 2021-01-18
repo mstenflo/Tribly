@@ -40,9 +40,9 @@ router.post('/', [auth, [
     
     
     const group = await newGroup.save();
-    const user = await User.findById(req.user.id);
-    user.groups.push({ id: group._id, name: group.name });
-    await user.save();
+    const profile = await Profile.findOne({user: req.user.id});
+    profile.groups.push({ _id: group._id, name: group.name, description: group.description });
+    await profile.save();
 
     res.json(group);
   } catch (err) {
@@ -50,5 +50,34 @@ router.post('/', [auth, [
     res.status(500).send('Server Error');
   }
 });
+
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id)
+    
+    if (!group) {
+      return res.status(404).json({ msg: 'Group not found' });
+    }
+    res.json(group);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Group not found' });
+    }
+
+    res.status(500).send('Server Error');
+  }
+});
+
+router.get('/me', auth, async (req, res) => {
+  try {
+
+  } catch (err) {
+    console.log('yues')
+    
+  }
+})
+
+
 
 module.exports = router;

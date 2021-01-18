@@ -3,7 +3,6 @@ import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE, GET_PROFILES } from "../acti
 const initialState = {
   profile: null,
   profiles: [],
-  repos: [],
   loading: true,
   error: {}
 }
@@ -35,7 +34,6 @@ export default function profile(state = initialState, action) {
       return {
         ...state,
         profile: null,
-        repos: [],
         loading: false
       }
     default:

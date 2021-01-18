@@ -9,7 +9,10 @@ const MyGroups = ({ groups }) => {
       <h1 className="text-primary">My Groups</h1>
       {
         groups.map(group => (
-          <GroupItem key={group._id} group={group} mygroup={true} />
+          <div key={group.id}>
+            <p>{group.id}</p>
+          <GroupItem groupId={group.id} mygroup={true} />
+          </div>
         ))
       }
     </div>

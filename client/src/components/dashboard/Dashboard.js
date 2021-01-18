@@ -5,16 +5,16 @@ import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import DashboardActions from './DashboardActions';
-import MyGroups from '../groups/MyGroups';
+import GroupItem from '../groups/GroupItem';
 
 const Dashboard = ({
   getCurrentProfile,
-  auth: { user },
-  profile: { profile, loading }
+  profile: { profile, loading },
 }) => {
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
+
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -32,11 +32,11 @@ const Dashboard = ({
             </Fragment>
           )}
         {
-          user !== null ? (
-          user.groups && user.groups.length > 0 ? 
-            <MyGroups groups={user.groups} /> :
+          profile && profile.groups && profile.groups.length > 0 ? 
+              profile.groups.map(group => (
+                <GroupItem key={group._id} group={group} mygroup={true} />
+            )) :
             null
-          ) : null
         }
       </Fragment>
     )
@@ -44,13 +44,11 @@ const Dashboard = ({
       
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);

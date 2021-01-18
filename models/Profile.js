@@ -33,7 +33,20 @@ const ProfileSchema = new mongoose.Schema({
     instagram: {
       type: String
     }
-  }
+  },
+  groups: [
+    {
+      id: {
+        type: String
+      },
+      name: {
+        type: String
+      },
+      description: {
+        type: String
+      }
+    }
+  ]
 });
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);

@@ -35,11 +35,13 @@ export const getGroup = id => async dispatch => {
   }
 }
 
-export const getMyGroups = (id) => async dispatch => {
+export const getUsersGroups = id => async dispatch => {
   try {
-    const res = await axios.get(`api/groups/`).filter(group => !group.contributors.includes(id))
+    const groups = await axios.get(`/api/groups`);
+    const res = groups.filter(group => group._id === id)
+    console.log('trying')
     console.log(res)
-
+    
     dispatch({
       type: GET_GROUPS,
       payload: res.data
@@ -76,12 +78,4 @@ export const createGroup = (formData, history, edit = false) => async dispatch =
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
-
-  // export const joinGroup = code => async dispatch => {
-  //   try {
-      
-  //   } catch (err) {
-      
-  //   }
-  // }
 }
