@@ -26,7 +26,7 @@ const CommentForm = ({ addComment, cancel, group, history }) => {
         />
       </div>
       <input type="submit" className="btn btn-primary" />
-      <Link className="btn btn-light my-1" to="/dashboard" onClick={() => cancel()}>Cancel</Link>
+      <div className="btn btn-light my-1" onClick={() => cancel()}>Cancel</div>
     </form>
   )
 }

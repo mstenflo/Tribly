@@ -2,12 +2,20 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import CommentForm from '../comment-forms/CommentForm';
+import TopicForm from '../topic-forms/TopicForm';
 
 const GroupActions = ({ group, history }) => {
   const [showCommentForm, setShowCommentForm] = useState(false);
+  const [showTopicForm, setShowTopicForm] = useState(false);
+
+  const toggleTopic = () => {
+    setShowTopicForm(!showTopicForm);
+    setShowCommentForm(false);
+  }
 
   const toggleComment = () => {
     setShowCommentForm(!showCommentForm);
+    setShowTopicForm(false);
   }
 
   return (
@@ -16,10 +24,13 @@ const GroupActions = ({ group, history }) => {
         <div className="btn btn-light" onClick={toggleComment}>
           <i className="far fa-comment-dots text-primary"></i> Add Comment
         </div>
-        <Link className="btn btn-light" to="/create-topic">
+        <div className="btn btn-light" onClick={toggleTopic}>
           <i className="fas fa-plus-circle text-primary"></i> Create Topic
-        </Link>
+        </div>
       </div>
+      {
+        showTopicForm && <TopicForm group={group} cancel={toggleTopic} history={history} />
+      }
       {
         showCommentForm && <CommentForm group={group} cancel={toggleComment} history={history} /> 
       }

@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const Topics = props => {
+const Topics = ({ topics }) => {
   return (
-    <div>
-      <h3>Topics</h3>
-    </div>
+    <Fragment>
+      {
+        topics && topics.length > 0 && <div>
+          <h3>Topics</h3>
+        </div>
+      }
+    </Fragment>
   )
 }
 
 Topics.propTypes = {
-
+  
 }
 
 export default Topics

@@ -184,14 +184,15 @@ img {
   border-radius: 5px;
   cursor: pointer;
   margin-right: 0.5rem;
-  transition: opacity 0.2s ease-in;
+  transition: opacity 2s ease-in;
   outline: none;
   box-shadow: 2px 2px #999;
+  transition: box-shadow 2s ease-in;
 }
 
 .btn:hover {
-  opacity: 0.8;
-  box-shadow: 2px 2px #999 inset;
+  opacity: 0.9;
+  box-shadow: 2px 2px #999 inset 
 }
 
 .btn-yellow {
