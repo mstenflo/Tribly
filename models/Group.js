@@ -19,20 +19,48 @@ const GroupSchema = new Schema({
     type: String,
     required: true
   },
+  topics: [
+    {
+      author: {
+        name: {
+          type: String
+        },
+        id: {
+          type: String
+        },
+        avatar: {
+          type: String
+        }
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      text: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   comments: [
     {
       author: {
-        type: String,
+        name: {
+          type: String
+        },
+        id: {
+          type: String
+        },
+        avatar: {
+          type: String
+        }
       },
       text: {
         type: String,
         required: true
-      },
-      name: {
-        type: String
-      },
-      avatar: {
-        type: String
       },
       date: {
         type: Date,

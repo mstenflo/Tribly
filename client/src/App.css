@@ -186,12 +186,14 @@ img {
   margin-right: 0.5rem;
   transition: opacity 0.2s ease-in;
   outline: none;
+  box-shadow: 2px 2px #999;
 }
 
 .btn:hover {
   opacity: 0.8;
+  box-shadow: 2px 2px #999 inset;
 }
- 
+
 .btn-yellow {
   border: 1px solid rgb(105, 105, 1);
   background-color: yellow;
@@ -356,6 +358,7 @@ input[type='file'] {
   margin-bottom: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
+  box-shadow: 2px 2px #999;
 }
 
 /* Comments */
@@ -364,6 +367,7 @@ input[type='file'] {
   border-radius: 5px;
   border: 1px solid #ddd;
   margin-bottom: 1rem;
+  box-shadow: 2px 2px #999;
 }
 
 .comment-info {

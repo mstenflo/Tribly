@@ -16,10 +16,7 @@ const GroupActions = ({ group, history }) => {
         <div className="btn btn-light" onClick={toggleComment}>
           <i className="far fa-comment-dots text-primary"></i> Add Comment
         </div>
-        <Link className="btn btn-light">
-          <i className="fas fa-list text-primary"></i> View Topics
-        </Link>
-        <Link className="btn btn-light">
+        <Link className="btn btn-light" to="/create-topic">
           <i className="fas fa-plus-circle text-primary"></i> Create Topic
         </Link>
       </div>

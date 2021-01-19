@@ -81,9 +81,11 @@ router.post('/:id/comment', [auth], async (req, res) => {
     const user = await User.findById(req.user.id);
 
     const newComment = {
-      name: user.name,
-      avatar: profile.avatar,
-      author: req.user.id,
+      author: {
+        id: req.user.id,
+        name: user.name,
+        avatar: profile.avatar,
+      },
       text: req.body.comment
     }
 

@@ -4,6 +4,7 @@ import { getGroup } from '../../actions/group';
 import { connect } from 'react-redux';
 import GroupActions from './GroupActions';
 import Comments from '../comments/Comments';
+import Topics from '../topics/Topics';
 
 const Group = ({ match, getGroup, group: { group }, history }) => {
   useEffect(() => {
@@ -16,6 +17,7 @@ const Group = ({ match, getGroup, group: { group }, history }) => {
         <h1 className="large text-primary">{group.name}</h1>
         <p className="mb-1">{group.description}</p>
         <GroupActions group={group} history={history} />
+        <Topics />
         <Comments comments={group.comments} />
       </div> : <p>No Group found</p>
   )
