@@ -21,7 +21,7 @@ const Groups = ({ getGroups, group: { loading, groups } }) => {
               {
                 groups.length > 0 ? 
                   groups.map(group => (
-                    <GroupItem key={group._id} group={group} mygroup={true} />
+                    <GroupItem key={group._id} group={group} />
                   )) : <h4>No Groups found</h4>
               }
             </div>

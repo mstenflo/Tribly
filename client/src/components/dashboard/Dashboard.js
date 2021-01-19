@@ -34,7 +34,7 @@ const Dashboard = ({
         {
           profile && profile.groups && profile.groups.length > 0 ? 
               profile.groups.map(group => (
-                <GroupItem key={group._id} group={group} mygroup={true} />
+                <GroupItem key={group._id} group={group} />
             )) :
             null
         }

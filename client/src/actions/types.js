@@ -15,3 +15,4 @@ export const ADD_GROUP = 'ADD_GROUP';
 export const GET_GROUP = 'GET_GROUP';
 export const GET_GROUPS = 'GET_GROUPS';
 export const GROUP_ERROR = 'GROUP_ERROR';
+export const ADD_GROUP_COMMENT = 'ADD_GROUP_COMMENT';

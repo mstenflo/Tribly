@@ -21,9 +21,8 @@ const GroupSchema = new Schema({
   },
   comments: [
     {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+      author: {
+        type: String,
       },
       text: {
         type: String,

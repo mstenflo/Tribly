@@ -8,7 +8,6 @@ import { createProfile, getCurrentProfile } from '../../actions/profile';
 
 const EditProfile = ({
   profile: { profile, loading },
-  auth: { user },
   createProfile,
   getCurrentProfile,
   history,
@@ -225,7 +224,6 @@ EditProfile.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  auth: state.auth
 });
 
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(

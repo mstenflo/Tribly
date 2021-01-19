@@ -16,9 +16,9 @@ import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
-import GroupForm from './components/groups/GroupForm';
+import GroupForm from './components/group-forms/GroupForm';
 import Groups from './components/groups/Groups';
-import Group from './components/groups/Group';
+import Group from './components/group/Group';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

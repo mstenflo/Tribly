@@ -69,15 +69,33 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-router.get('/me', auth, async (req, res) => {
+router.post('/:id/comment', [auth], async (req, res) => {
   try {
-
-  } catch (err) {
-    console.log('yues')
+    const group = await Group.findById(req.params.id);
     
+    if (!group) {
+      return res.status(404).json({ msg: 'Group not found' });
+    }
+
+    const profile = await Profile.findOne({ user: req.user.id });
+    const user = await User.findById(req.user.id);
+
+    const newComment = {
+      name: user.name,
+      avatar: profile.avatar,
+      author: req.user.id,
+      text: req.body.comment
+    }
+
+    group.comments.unshift(newComment);
+    await group.save();
+
+    res.json(group);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 })
-
 
 
 module.exports = router;

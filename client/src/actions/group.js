@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { ADD_GROUP, GROUP_ERROR, GET_GROUP, GET_GROUPS } from './types';
+import { ADD_GROUP, GROUP_ERROR, GET_GROUP, GET_GROUPS, ADD_GROUP_COMMENT } from './types';
 
 export const getGroups = () => async dispatch => {
   try {
@@ -72,6 +72,32 @@ export const createGroup = (formData, history, edit = false) => async dispatch =
     dispatch(setAlert(edit ? 'Group updated' : 'Group Created', 'success'));
 
     history.push('/dashboard');
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
+
+export const addComment = (id, comment, history) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const res = await axios.post(`/api/groups/${id}/comment`, { comment }, config);
+
+    dispatch({
+      type: ADD_GROUP_COMMENT,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Comment added', 'success'));
+
+    history.push(`/group/${id}`)
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,

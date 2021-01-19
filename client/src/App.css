@@ -130,6 +130,9 @@ img {
   padding: 3rem 0;
 }
 
+.px-1 {
+  padding: 0 1rem;
+}
 
 /* Margin */
 
@@ -165,6 +168,9 @@ img {
   margin: 3rem 0;
 }
 
+.mb-1 {
+  margin-bottom: 1rem;
+}
 
 /* Elements */
 
@@ -323,6 +329,10 @@ button {
   width: 100px;
 }
 
+.avatar-sm {
+  width: 40px;
+}
+
 .avatar img {
   border-radius: 50%;
 }
@@ -333,4 +343,38 @@ button {
 
 input[type='file'] {
   color: transparent;
+}
+
+/* Groups */
+
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Comments */
+
+.comment-box {
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.comment-info {
+  display: flex;
+}
+
+.comment-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  color: #999;
 }
