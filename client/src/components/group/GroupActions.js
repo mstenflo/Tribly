@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import CommentForm from '../comment-forms/CommentForm';
 import TopicForm from '../topic-forms/TopicForm';
 

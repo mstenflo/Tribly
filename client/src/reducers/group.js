@@ -1,4 +1,4 @@
-import { GET_GROUP, ADD_GROUP, GROUP_ERROR, GET_GROUPS, ADD_GROUP_COMMENT } from '../actions/types';
+import { GET_GROUP, ADD_GROUP, GROUP_ERROR, GET_GROUPS, ADD_GROUP_COMMENT, ADD_GROUP_TOPIC, ADD_CONTRIBUTION } from '../actions/types';
 
 const initialState = {
   groups: [],
@@ -39,9 +39,27 @@ export default function group(state = initialState, action) {
       return {
         ...state,
         group: { 
+          ...state.group,
           comments: [payload, ...state.group.comments]
         },
         loading: false
+      }
+    case ADD_GROUP_TOPIC:
+      return {
+        ...state,
+        group: {
+          ...state.group,
+          topics: [payload, ...state.group.topics]
+        },
+        loading: false
+      }
+    case ADD_CONTRIBUTION:
+      return {
+        ...state,
+        group: {
+          ...state.group,
+          topic: payload
+        }
       }
     default:
       return state;

@@ -19,6 +19,7 @@ import Profile from './components/profile/Profile';
 import GroupForm from './components/group-forms/GroupForm';
 import Groups from './components/groups/Groups';
 import Group from './components/group/Group';
+import Topic from './components/topic/Topic';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -48,6 +49,7 @@ const App = () => {
               <PrivateRoute exact path="/create-group" component={GroupForm} />
               <PrivateRoute exact path="/groups" component={Groups} />
               <PrivateRoute exact path="/group/:id" component={Group} />
+              <PrivateRoute exact path="/group/:id/topic/:topicId" component={Topic} />
             </Switch>
           </section>
         </Fragment>

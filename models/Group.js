@@ -42,7 +42,79 @@ const GroupSchema = new Schema({
       date: {
         type: Date,
         default: Date.now
-      }
+      },
+      comments: [
+        {
+          author: {
+            name: {
+              type: String
+            },
+            id: {
+              type: String
+            },
+            avatar: {
+              type: String
+            }
+          },
+          text: {
+            type: String,
+            required: true
+          },
+          date: {
+            type: Date,
+            default: Date.now
+          }
+        }
+      ],
+      contributions: [
+        {
+          author: {
+            name: {
+              type: String
+            },
+            id: {
+              type: String
+            },
+            avatar: {
+              type: String
+            }
+          },
+          file: {
+            type: String,
+            required: true
+          },
+          text: {
+            type: String
+          },
+          date: {
+            type: Date,
+            default: Date.now
+          },
+          comments: [
+            {
+              author: {
+                name: {
+                  type: String
+                },
+                id: {
+                  type: String
+                },
+                avatar: {
+                  type: String
+                }
+              },
+              text: {
+                type: String,
+                required: true
+              },
+              date: {
+                type: Date,
+                default: Date.now
+              }
+            }
+          ],
+        }
+      ],
     }
   ],
   comments: [

@@ -1,14 +1,28 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom';
+import { addTopic } from '../../actions/group';
+import { connect } from 'react-redux';
 
-const TopicForm = ({ cancel, group, history }) => {
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
+const TopicForm = ({ cancel, group, history, addTopic }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    text: ''
+  });
 
+  const { title, text } = formData;
+
+  const onChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+  
   const onSubmit = e => {
     e.preventDefault();
+    addTopic(group._id, formData, history);
     cancel();
+    setFormData({
+      title: '',
+      text: ''
+    })
   }
   
   return (
@@ -19,7 +33,7 @@ const TopicForm = ({ cancel, group, history }) => {
           name="title"
           value={title}
           placeholder="Enter a title for your topic"
-          onChange={e => setTitle(e.target.value)}
+          onChange={e => onChange(e)}
         />
       </div>
       <div className="form-group">
@@ -27,7 +41,7 @@ const TopicForm = ({ cancel, group, history }) => {
           name="text"
           value={text}
           placeholder="Add some more information about this topic"
-          onChange={e => setText(e.target.value)}
+          onChange={e => onChange(e)}
           rows="5"
         />
       </div>
@@ -41,6 +55,7 @@ TopicForm.propTypes = {
   cancel: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  addTopic: PropTypes.func.isRequired,
 }
 
-export default TopicForm
+export default connect(null, { addTopic })(TopicForm);

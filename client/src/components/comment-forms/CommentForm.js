@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/group';
-import { Link } from 'react-router-dom';
 
 const CommentForm = ({ addComment, cancel, group, history }) => {
   const [comment, setComment] = useState('');
@@ -11,7 +10,6 @@ const CommentForm = ({ addComment, cancel, group, history }) => {
     e.preventDefault();
     addComment(group._id, comment, history);
     cancel();
-    setComment('');
   }
 
   return (

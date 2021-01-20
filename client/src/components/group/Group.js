@@ -17,7 +17,8 @@ const Group = ({ match, getGroup, group: { group }, history }) => {
         <h1 className="large text-primary">{group.name}</h1>
         <p className="mb-1">{group.description}</p>
         <GroupActions group={group} history={history} />
-        <Topics topics={group.topics} />
+        <Topics group={group} />
+        <div className="mb-1"></div>
         <Comments comments={group.comments} />
       </div> : <p>No Group found</p>
   )
