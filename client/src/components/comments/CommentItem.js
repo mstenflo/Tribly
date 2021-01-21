@@ -8,14 +8,16 @@ const CommentItem = ({ comment: { date, text, author: { name, id, avatar} }}) =>
     <Fragment>
       <div className="comment-box bg-light">
         <div className="comment-info">
-          {
-            avatar ? <img src={avatar} className="round-img m avatar-sm" alt="avatar" /> : 
-              <img
-                src={`https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png`}
-                alt="avatar" 
-                className="round-img m avatar-sm"  
-              />
-          }
+          <div className="avatar-sm m">
+            {
+              avatar ? <img src={avatar} className="" alt="avatar" /> : 
+                <img
+                  src={`https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png`}
+                  alt="avatar" 
+                  className="round-img m avatar-sm"  
+                />
+            }
+          </div>
           <div className="comment-name">
             <Link to={`/profile/${id}`}>
               {name}

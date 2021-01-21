@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import './Profiles.css';
+// import './Profiles.css';
 
 const ProfileItem = ({ profile: {
   user: { _id, name },
@@ -13,9 +13,9 @@ const ProfileItem = ({ profile: {
 }}) => {
   return (
     <div className="profile bg-light">
-      <Link to={`/profile/${_id}`}>
+      <Link to={`/profile/${_id}`} className="profile-img-container">
         {avatar ?
-          <img src={avatar} alt="" className="round-img" /> :
+          <img src={avatar} alt="" /> :
           <img src={`https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png`} alt="avatar" />
         }
       </Link>

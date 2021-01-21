@@ -79,11 +79,23 @@ const GroupSchema = new Schema({
               type: String
             }
           },
+          title: {
+            type: String
+          },
+          text: {
+            type: String
+          },
           file: {
+            type: String,
+          },
+          filetype: {
             type: String,
             required: true
           },
-          text: {
+          youtube: {
+            type: String
+          },
+          link: {
             type: String
           },
           date: {

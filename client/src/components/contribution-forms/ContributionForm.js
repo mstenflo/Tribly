@@ -8,15 +8,16 @@ import { connect } from 'react-redux';
 const ContributionForm = ({ group, cancel, history, topic, addContribution }) => {
   
   const [formData, setFormData] = useState({
+    title: '',
     text: '',
     file: '',
+    filetype: '',
     groupId: group._id,
     topicId: topic._id
   });
-
   const [loadingFile, setLoadingFile] = useState(false);
 
-  const { text, file } = formData;
+  const { title, text, file, filetype } = formData;
 
   const config = {
     bucketName: S3Config.S3Bucket,
@@ -31,7 +32,7 @@ const ContributionForm = ({ group, cancel, history, topic, addContribution }) =>
     cancel();
   }
 
-  const onChange = (e) => {
+  const onChange = e => {
     if (e.target.files) {
       S3FileUpload.uploadFile(e.target.files[0], config, { mode: 'no-cors' })
         .then(data => {
@@ -41,12 +42,22 @@ const ContributionForm = ({ group, cancel, history, topic, addContribution }) =>
           alert(err);
         });
     } else {
+      setLoadingFile(false);
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   }
 
   return (
     <form className="form" onSubmit={e => onSubmit(e)}>
+      <div className="form-group">
+        <input
+          type="text"
+          placeholder="Enter a title"
+          name="title"
+          value={title}
+          onChange={e => onChange(e)}
+        />
+      </div>
       <div className="form-group">
         <textarea
           placeholder="Tell us about your contribution"
@@ -64,16 +75,42 @@ const ContributionForm = ({ group, cancel, history, topic, addContribution }) =>
           }
         </div> : null
       }
-      <div className="form-group" onClick={() => setLoadingFile(true)}>
-        <input
-          type="file"
-          name="file"
-          id="file"
-          accept="audio/*, video/*, image/*"
-          onChange={e => onChange(e)}
-        />
+      <div className="form-group">
+        <select name="filetype" onChange={e => onChange(e)} defaultValue="">
+          <option value="" disabled>-- Select File Type --</option>
+          <option value="image/*">Image</option>
+          <option value="video/*">Video</option>
+          <option value="audio/*">Audio</option>
+          <option value="youtube">Youtube Link</option>
+          <option value="link">Web Link</option>
+        </select>
       </div>
-      <input type="submit" className="btn btn-primary" />
+      <div className="form-group">
+        {
+          (filetype === 'image/*' || filetype === 'video/*' || filetype === 'audio/*') &&
+            <input
+              onClick={() => setLoadingFile(true)}
+              type="file"
+              name="file"
+              accept="image/*, video/*, audio/*"
+              onChange={e => onChange(e)}
+            />
+        }
+        {
+          (filetype === 'youtube' || filetype === 'link') &&
+          <input
+            type="text"
+            placeholder="Enter the link"
+            name={filetype}
+            onChange={e => onChange(e)}
+          />
+        }
+      </div>
+      {
+        !loadingFile ? <input type="submit" className="btn btn-primary" /> : null
+      }
+      <div className="btn btn-light" onClick={() => cancel()}>Cancel</div>
+      <div className="mb-1"></div>
     </form>
   )
 }

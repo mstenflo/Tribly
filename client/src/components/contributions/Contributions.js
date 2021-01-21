@@ -6,8 +6,14 @@ const Contributions = ({ contributions }) => {
   return (
     <div>
       {
+        contributions && <h1 className="mb-1">Contributions</h1>
+      }
+      {
         contributions && contributions.map(contribution => (
-          <ContributionItem key={contribution._id} contribution={contribution} />
+          <div key={contribution._id}>
+            <ContributionItem contribution={contribution} />
+            <div className="line"></div>
+          </div>
         ))
       }
     </div>

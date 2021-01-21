@@ -211,6 +211,7 @@ img {
 
 .alert {
   padding: 0.8rem;
+  border-radius: 0.5rem;
   margin: 1rem 0;
   opacity: 0.9;
   background: var(--light-color);
@@ -328,25 +329,105 @@ button {
   justify-content: space-between;
 }
 
+input[type='file'] {
+  color: transparent;
+}
+
+/* Profiles */
+
+.profile {
+  display: grid;
+  grid-template-columns: 2fr 4fr 2fr;
+  align-items: center;
+  grid-gap: 2rem;
+  padding: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 2px 2px #999;
+}
+
+.profile-top {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  padding: 2rem 5rem;
+  justify-content: space-around;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.profile-img-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #000;
+  box-shadow: 0 0 5px 2px #999;
+}
+
+.profile-img-container img {
+  object-fit: cover;
+  min-width: 200px;
+  min-height: 200px;
+}
+
+.profile-top .icons a {
+  color: #fff;
+  margin: 0 0.3rem;
+}
+
+.profile-top .icons a:hover {
+  color: #ccc;
+}
+
+.profile-about {
+  grid-area: about;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px #999;
+}
+
+.profile-about .skills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.skills i {
+  color: green;
+}
+
 .avatar {
   width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 50%;
 }
 
 .avatar-sm {
   width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #000;
+  box-shadow: 0 0 3px 1px #999;
 }
 
-.avatar img {
-  border-radius: 50%;
+.avatar-sm img {
+  object-fit: cover;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .round-img {
   border-radius: 50%;
 }
 
-input[type='file'] {
-  color: transparent;
-}
 
 /* Groups */
 
@@ -382,4 +463,20 @@ input[type='file'] {
 
 .date {
   color: #999;
+}
+
+/* Contributions */
+
+.contribution-image-container {
+  overflow: hidden;
+  max-height: 400px;
+  max-width: 400px;
+}
+
+.contribution-image-container img {
+  border-radius: 1rem;
+  border: 3px solid #000;
+  object-fit: contain;
+  max-height: 400px;
+  width: auto;
 }

@@ -148,15 +148,14 @@ router.post('/:groupId/topic/:topicId/contribution', auth, async (req, res) => {
         name: user.name,
         avatar: profile.avatar
       },
+      title: req.body.title,
       text: req.body.text,
-      file: req.body.file
+      filetype: req.body.filetype,
+      file: req.body.file,
+      youtube: req.body.youtube,
+      link: req.body.link
     }
 
-    // const topic = group.topics.filter(topic => topic._id.equals(req.params.topicId))
-    // topic[0].contributions.unshift(newContribution);
-    // console.log(topic[0])
-
-    // const query = { "topics._id": req.params.topicId };
     const update = { $push: { "topics.$[topic].contributions": newContribution } };
     const options = {
       arrayFilters: [
@@ -166,9 +165,7 @@ router.post('/:groupId/topic/:topicId/contribution', auth, async (req, res) => {
       ]
     }
     const res = await group.updateOne(update, options);
-    // const options = newContribution;
-    // group.topics.insertOne(newContribution);
-    console.log(res)
+
     res.json(res);
   } catch (err) {
     console.error(err.message);
