@@ -10,9 +10,8 @@ const Contributions = ({ contributions }) => {
       }
       {
         contributions && contributions.map(contribution => (
-          <div key={contribution._id}>
+          <div key={contribution._id} className="comment-box p-1 bg-light">
             <ContributionItem contribution={contribution} />
-            <div className="line"></div>
           </div>
         ))
       }

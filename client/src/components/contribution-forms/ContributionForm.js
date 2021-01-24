@@ -97,10 +97,19 @@ const ContributionForm = ({ group, cancel, history, topic, addContribution }) =>
             />
         }
         {
-          (filetype === 'youtube' || filetype === 'link') &&
+          filetype === 'link' &&
           <input
             type="text"
             placeholder="Enter the link"
+            name={filetype}
+            onChange={e => onChange(e)}
+          />
+        }
+        {
+          filetype === 'youtube' &&
+          <input
+            type="text"
+            placeholder="Enter the videoId (not the entire link)"
             name={filetype}
             onChange={e => onChange(e)}
           />

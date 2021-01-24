@@ -36,7 +36,7 @@ const Dashboard = ({
               profile.groups.map(group => (
                 <GroupItem key={group._id} group={group} />
             )) :
-            null
+            <p>no groups</p>
         }
       </Fragment>
     )
