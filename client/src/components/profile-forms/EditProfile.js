@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import S3Config from '../../config';
 import S3FileUpload from 'react-s3';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
@@ -27,10 +26,10 @@ const EditProfile = ({
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   const config = {
-    bucketName: S3Config.S3Bucket,
-    region: S3Config.S3Region,
-    accessKeyId: S3Config.S3AccessKeyID,
-    secretAccessKey: S3Config.S3SecretAccessKey
+    bucketName: process.env.S3Bucket,
+    region: process.env.S3Region,
+    accessKeyId: process.env.S3AccessKeyID,
+    secretAccessKey: process.env.S3SecretAccessKey
   }
   
   useEffect(() => {
