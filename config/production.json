@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://admin:asdhgfasd@tribly.zygvj.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
+}
