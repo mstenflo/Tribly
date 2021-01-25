@@ -95,18 +95,19 @@ export const addComment = (id, comment, history) => async dispatch => {
         'Content-Type': 'application/json'
       }
     }
-
     const res = await axios.post(`/api/groups/${id}/comment`, { comment }, config);
+    console.log(res)
 
     dispatch({
       type: ADD_GROUP_COMMENT,
       payload: res.data
     });
 
+    console.log('coming error')
     dispatch(setAlert('Comment added', 'success'));
-
     history.push(`/group/${id}`)
   } catch (err) {
+    console.log('error')
     dispatch({
       type: GROUP_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

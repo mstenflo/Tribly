@@ -1,5 +1,10 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import { convertToHTML } from 'draft-convert';
+import draftToHtml from 'draftjs-to-html';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { createGroup } from '../../actions/group';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,12 +15,26 @@ const GroupForm = ({ createGroup, history }) => {
     description: ''
   });
 
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
+  const  [convertedContent, setConvertedContent] = useState(null);
+
+  const handleEditorChange = (state) => {
+    setEditorState(state);
+    convertContentToHTML();
+  }
+  const convertContentToHTML = () => {
+    let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+    setConvertedContent(currentContentAsHTML);
+  }
+
   const { name, description } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
+    const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    setFormData({ ...formData, description: htmlText });
     createGroup(formData, history)
   }
   
@@ -28,6 +47,13 @@ const GroupForm = ({ createGroup, history }) => {
           <small className="form-text">Give your group a unique name</small>
         </div>
         <div className="form-group">
+          <Editor
+            editorState={editorState}
+            onEditorStateChange={handleEditorChange}
+            wrapperClassName="wrapper-class"
+            editorClassName="editor-class"
+            toolbarClassName="toolbar-class"
+          />
           <input type="text" placeholder="description" name="description" value={description} onChange={e => onChange(e)} />
           <small className="form-text">What are your objectives for this group</small>
         </div>

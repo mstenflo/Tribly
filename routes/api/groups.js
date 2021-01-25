@@ -93,7 +93,7 @@ router.post('/:id/comment', [auth], async (req, res) => {
     group.comments.unshift(newComment);
     await group.save();
 
-    res.json(group);
+    res.json(newComment);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

@@ -1,4 +1,12 @@
-import { GET_GROUP, ADD_GROUP, GROUP_ERROR, GET_GROUPS, ADD_GROUP_COMMENT, ADD_GROUP_TOPIC, ADD_CONTRIBUTION } from '../actions/types';
+import {
+  GET_GROUP,
+  ADD_GROUP,
+  GROUP_ERROR,
+  GET_GROUPS,
+  ADD_GROUP_COMMENT,
+  ADD_GROUP_TOPIC,
+  ADD_CONTRIBUTION
+} from '../actions/types';
 
 const initialState = {
   groups: [],

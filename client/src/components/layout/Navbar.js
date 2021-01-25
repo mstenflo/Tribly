@@ -8,12 +8,12 @@ import './Navbar.css';
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
-      <li><Link to="/profiles">Contributors</Link></li>
+      {/* <li><Link to="/profiles">Contributors</Link></li>
       <li>
       <Link to="/dashboard">
           <span className="hide-sm">{user && user.name}</span>
         </Link>
-      </li>
+      </li> */}
       <li>
         <a onClick={logout} href="#!">
           <i className="fas fa-sign-out-alt" />{' '}

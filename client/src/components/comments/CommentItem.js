@@ -1,10 +1,19 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import DOMPurify from 'dompurify';
 import Moment from 'react-moment';
 
-const CommentItem = ({ comment: { date, text, author: { name, id, avatar} }}) => {
+const CommentItem = ({ comment: { date, text, author: { name, id, avatar } } }) => {
+  
+  const createMarkup = (html) => {
+    return  {
+      __html: DOMPurify.sanitize(html)
+    }
+  }
+
   return (
+    !text && !name ? null :
     <Fragment>
       <div className="comment-box bg-light">
         <div className="comment-info">
@@ -27,7 +36,7 @@ const CommentItem = ({ comment: { date, text, author: { name, id, avatar} }}) =>
             </Moment>
           </div>
         </div>
-        <p className="m">{text}</p>
+        <div className="px-1" dangerouslySetInnerHTML={createMarkup(text)}></div>
       </div>
     </Fragment>
   )

@@ -1,26 +1,42 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+// import { convertToHTML } from 'draft-convert';
+import draftToHtml from 'draftjs-to-html';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/group';
 
 const CommentForm = ({ addComment, cancel, group, history }) => {
-  const [comment, setComment] = useState('');
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
+  // const  [convertedContent, setConvertedContent] = useState(null);
+
+  const handleEditorChange = (state) => {
+    setEditorState(state);
+    // convertContentToHTML();
+  }
+  // const convertContentToHTML = () => {
+  //   let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+  //   setConvertedContent(currentContentAsHTML);
+  // }
 
   const onSubmit = e => {
     e.preventDefault();
-    addComment(group._id, comment, history);
+    const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    addComment(group._id, htmlText, history);
     cancel();
   }
 
   return (
     <form className="form" onSubmit={e => onSubmit(e)}>
       <div className="from-group">
-        <textarea 
-          placeholder="Enter your comment"
-          name="comment"
-          value={comment}
-          rows="5"
-          onChange={e => setComment(e.target.value)}
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={handleEditorChange}
+          wrapperClassName="wrapper-class"
+          editorClassName="editor-class"
+          toolbarClassName="toolbar-class"
         />
       </div>
       <input type="submit" className="btn btn-primary" />

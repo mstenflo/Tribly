@@ -26,7 +26,11 @@ a {
 }
 
 ul {
-  list-style: none;
+  list-style-position: inside;
+}
+
+ol {
+  list-style-position: inside;
 }
 
 img {
@@ -133,6 +137,7 @@ img {
 .px-1 {
   padding: 0 1rem;
 }
+
 
 /* Margin */
 
@@ -463,6 +468,45 @@ input[type='file'] {
 
 .date {
   color: #999;
+}
+
+.comment-header {
+  background-color: var(--primary-color);
+  border-radius: 0.5rem;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: 5vh;
+  text-align: center;
+}
+
+.wrapper-class {
+  /* padding: 0.2rem; */
+  border: 1px solid #ccc;
+  /* border-radius: 0.5rem; */
+  background-color: var(--light-color);
+}
+
+.editor-class {
+  background-color: #fff;
+  padding: 1rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  color: #000;
+  /* border-radius: 0.5rem; */
+}
+
+.toolbar-class {
+  /* border-radius: 0.5rem; */
+  border-bottom: 1px solid #ccc;
+}
+
+.comment-text {
+  /* padding: 0 57px; */
 }
 
 /* Contributions */
