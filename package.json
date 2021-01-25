@@ -1,8 +1,11 @@
 {
   "name": "tribly",
   "version": "1.0.0",
-  "description": "Social network for developers",
+  "description": "Social network for creatives",
   "main": "server.js",
+  "engines": {
+    "node": "15.x"
+  },
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
