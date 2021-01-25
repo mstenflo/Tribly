@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import S3FileUpload from 'react-s3';
-import S3Config from '../../config';
 import { addContribution } from '../../actions/group';
 import { connect } from 'react-redux';
 
@@ -20,10 +19,10 @@ const ContributionForm = ({ group, cancel, history, topic, addContribution }) =>
   const { title, text, file, filetype } = formData;
 
   const config = {
-    bucketName: S3Config.S3Bucket,
-    region: S3Config.S3Region,
-    accessKeyId: S3Config.S3AccessKeyID,
-    secretAccessKey: S3Config.S3SecretAccessKey
+    bucketName: process.env.S3Bucket,
+    region: process.env.S3Region,
+    accessKeyId: process.env.S3AccessKeyID,
+    secretAccessKey: process.env.S3SecretAccessKey
   }
 
   const onSubmit = e => {
