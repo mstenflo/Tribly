@@ -47,8 +47,6 @@ export const getUsersGroups = id => async dispatch => {
   try {
     const groups = await axios.get(`/api/groups`);
     const res = groups.filter(group => group._id === id)
-    console.log('trying')
-    console.log(res)
     
     dispatch({
       type: GET_GROUPS,
@@ -96,18 +94,15 @@ export const addComment = (id, comment, history) => async dispatch => {
       }
     }
     const res = await axios.post(`/api/groups/${id}/comment`, { comment }, config);
-    console.log(res)
 
     dispatch({
       type: ADD_GROUP_COMMENT,
       payload: res.data
     });
 
-    console.log('coming error')
     dispatch(setAlert('Comment added', 'success'));
     history.push(`/group/${id}`)
   } catch (err) {
-    console.log('error')
     dispatch({
       type: GROUP_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

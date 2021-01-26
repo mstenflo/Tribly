@@ -34,7 +34,9 @@ const GroupForm = ({ createGroup, history }) => {
   const onSubmit = e => {
     e.preventDefault();
     const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    
     setFormData({ ...formData, description: htmlText });
+    
     createGroup(formData, history)
   }
   
@@ -54,10 +56,8 @@ const GroupForm = ({ createGroup, history }) => {
             editorClassName="editor-class"
             toolbarClassName="toolbar-class"
           />
-          <input type="text" placeholder="description" name="description" value={description} onChange={e => onChange(e)} />
           <small className="form-text">What are your objectives for this group</small>
         </div>
-
         <input type="submit" className="btn btn-primary my-1" />
         <Link to="/dashboard" className="btn btn-light my-1">Go Back</Link>
       </form>

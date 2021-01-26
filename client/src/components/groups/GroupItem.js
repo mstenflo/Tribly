@@ -1,9 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom'
 
 const GroupItem = ({ group }) => {
   const id = group.id || group._id
+
+  const createMarkup = (html) => {
+    return  {
+      __html: DOMPurify.sanitize(html)
+    }
+  }
   
   return (
     group ? 
@@ -12,7 +19,7 @@ const GroupItem = ({ group }) => {
           <Link to={`/group/${id}`}>
             <h2>{group.name}</h2>
           </Link>
-          <p>{group.description}</p>
+          <div dangerouslySetInnerHTML={createMarkup(group.description)}></div>
         </div>
       </div> : null
   )

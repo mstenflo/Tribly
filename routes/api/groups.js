@@ -124,7 +124,7 @@ router.post('/:id/topic', auth, async (req, res) => {
     group.topics.unshift(newTopic);
     await group.save();
 
-    res.json(group);
+    res.json(group.topics[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

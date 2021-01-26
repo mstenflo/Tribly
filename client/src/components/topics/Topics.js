@@ -11,7 +11,7 @@ const Topics = ({ group: { topics, _id} }) => {
           {
             topics.map(topic => (
               <span key={topic._id}>
-                <TopicItem groupId={_id} topic={topic} />
+                <TopicItem groupId={_id} topic={topic} key={topic._id} />
               </span>
             ))
           }

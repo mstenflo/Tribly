@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import DOMPurify from 'dompurify';
 import { getGroup } from '../../actions/group'
 import { connect } from 'react-redux'
 import ContributionActions from '../contributions/ContributionActions'
@@ -10,18 +11,24 @@ const Topic = ({ getGroup, match, group: { group }, history }) => {
     getGroup(match.params.id)
   }, [getGroup, match.params.id]);
 
+  const createMarkup = (html) => {
+    return  {
+      __html: DOMPurify.sanitize(html)
+    }
+  }
+  
   const getTopic = id => {
     if (!group) return null;
     return group.topics.filter(topic => topic._id === id)[0]
   }
   
   const topic = getTopic(match.params.topicId)
-
+  
   return group && topic ?
     <div>
       <h1 className="large text-primary">{group.name}</h1>
       <h1>{topic.title}</h1>
-      <p>{topic.text}</p>
+      <div className="mb-1" dangerouslySetInnerHTML={createMarkup(topic.text)}></div>
       <div className="mb-1"></div>
       <ContributionActions group={group} topic={topic} history={history} />
       <Contributions contributions={topic.contributions} />

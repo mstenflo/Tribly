@@ -10,16 +10,10 @@ import { addComment } from '../../actions/group';
 
 const CommentForm = ({ addComment, cancel, group, history }) => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
-  // const  [convertedContent, setConvertedContent] = useState(null);
 
   const handleEditorChange = (state) => {
     setEditorState(state);
-    // convertContentToHTML();
   }
-  // const convertContentToHTML = () => {
-  //   let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-  //   setConvertedContent(currentContentAsHTML);
-  // }
 
   const onSubmit = e => {
     e.preventDefault();

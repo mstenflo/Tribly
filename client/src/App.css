@@ -353,6 +353,18 @@ input[type='file'] {
   box-shadow: 2px 2px #999;
 }
 
+.profile ul {
+  list-style-type: none;
+}
+
+.profile ul i {
+  color: var(--success-color);
+}
+
+.profile ul li {
+  color: #000;
+}
+
 .profile-top {
   grid-area: top;
   display: flex;
