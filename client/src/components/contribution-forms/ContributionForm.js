@@ -41,6 +41,7 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
   }
 
   const onChange = e => {
+    console.log(process.env.S3AccessKeyID)
     if (e.target.files) {
       console.log('about to upload')
       console.log(e.target.files[0], config)
