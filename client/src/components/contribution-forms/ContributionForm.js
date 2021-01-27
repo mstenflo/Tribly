@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import S3FileUpload from 'react-s3';
+import S3Config from '../../config';
 import { addContribution } from '../../actions/contribution';
 import { connect } from 'react-redux';
 
@@ -28,10 +29,10 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
   const { title, text, file, filetype } = formData;
 
   const config = {
-    bucketName: process.env.S3Bucket,
-    region: process.env.S3Region,
-    accessKeyId: process.env.S3AccessKeyID,
-    secretAccessKey: process.env.S3SecretAccessKey
+    bucketName: S3Config.S3Bucket,
+    region: S3Config.S3Region,
+    accessKeyId: S3Config.S3AccessKeyID,
+    secretAccessKey: S3Config.S3SecretAccessKey
   }
 
   const onSubmit = e => {
@@ -41,13 +42,11 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
   }
 
   const onChange = e => {
-    console.log(process.env.S3AccessKeyID)
     if (e.target.files) {
-      console.log('about to upload')
-      console.log(e.target.files[0], config)
       S3FileUpload.uploadFile(e.target.files[0], config)
       .then(data => {
         setFormData({ ...formData, file: data.location });
+        setLoadingFile(false);
       })
       .catch(err => {
           alert(err);
@@ -57,7 +56,6 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
       if (e.target.name === 'link') {
         const weblink = e.target.value.includes('http') ? e.target.value : 'http://' + e.target.value;
         setFormData({ ...formData, link: weblink });
-        console.log('formdata',formData)
       } else {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       }
