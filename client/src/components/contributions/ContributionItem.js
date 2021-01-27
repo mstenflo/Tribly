@@ -21,16 +21,16 @@ const ContributionItem = ({ contribution: { title, text, file, author, filetype,
       <h1 className="text-primary">{title}</h1>
       <h3 className="mb-1">{author.name}</h3>
       {
+        !filetype ? null :
         ReactPlayer.canPlay(file) ? 
-          <ReactPlayer url={file} controls /> : filetype && filetype === 'youtube' ?
+          <ReactPlayer url={file} controls /> : filetype === 'youtube' ?
             <div>
               <ReactPlayer url={youtube} controls className="mb-1" />
               <a href={youtube} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
                 Click Me!
               </a> to go to the website
-            </div> : filetype && filetype === 'image/*' ? 
+            </div> : filetype === 'image/*' ? 
               <div>
-                <p>hello</p>
                 <div className="contribution-image-container" onClick={() => setViewerIsOpen(true)}>
                   <img src={file} alt="image" onClick={() => setViewerIsOpen(true)} />
                   <ImgsViewer
@@ -43,7 +43,7 @@ const ContributionItem = ({ contribution: { title, text, file, author, filetype,
                     backdropCloseable 
                   />
                 </div>
-              </div> : <a href={file} className="btn btn-primary" target="_blank" rel="noopener noreferrer">Click Me!</a>
+              </div> : <a href={link} className="btn btn-primary" target="_blank" rel="noopener noreferrer">Click Me!</a>
       }
       <div className="mb-1"></div>
       <p>{text}</p>

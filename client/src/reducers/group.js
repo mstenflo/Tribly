@@ -61,14 +61,6 @@ export default function group(state = initialState, action) {
         },
         loading: false
       }
-    case ADD_CONTRIBUTION:
-      return {
-        ...state,
-        group: {
-          ...state.group,
-          topic: payload
-        }
-      }
     default:
       return state;
   }

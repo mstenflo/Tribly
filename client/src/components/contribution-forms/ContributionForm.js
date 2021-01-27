@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import S3FileUpload from 'react-s3';
-import { addContribution } from '../../actions/group';
+import { addContribution } from '../../actions/contribution';
 import { connect } from 'react-redux';
 
-const ContributionForm = ({ group, cancel, history, topic, addContribution }) => {
+const ContributionForm = ({ group, cancel, topic, addContribution }) => {
   
   const [formData, setFormData] = useState({
+    author: {},
+    group: {
+      id: group._id,
+      name: group.name
+    },
+    topic: {
+      id: topic._id,
+      title: topic.title
+    },
     title: '',
     text: '',
+    link: '',
+    youtube: '',
     file: '',
-    filetype: '',
-    groupId: group._id,
-    topicId: topic._id
+    filetype: ''
   });
   const [loadingFile, setLoadingFile] = useState(false);
 
@@ -27,22 +36,30 @@ const ContributionForm = ({ group, cancel, history, topic, addContribution }) =>
 
   const onSubmit = e => {
     e.preventDefault();
-    addContribution(group._id, topic._id, formData, history);
+    addContribution(group._id, topic._id, formData);
     cancel();
   }
 
   const onChange = e => {
     if (e.target.files) {
-      S3FileUpload.uploadFile(e.target.files[0], config, { mode: 'no-cors' })
-        .then(data => {
-          setFormData({ ...formData, file: data.location });
-        })
-        .catch(err => {
+      console.log('about to upload')
+      console.log(e.target.files[0], config)
+      S3FileUpload.uploadFile(e.target.files[0], config)
+      .then(data => {
+        setFormData({ ...formData, file: data.location });
+      })
+      .catch(err => {
           alert(err);
         });
     } else {
       setLoadingFile(false);
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      if (e.target.name === 'link') {
+        const weblink = e.target.value.includes('http') ? e.target.value : 'http://' + e.target.value;
+        setFormData({ ...formData, link: weblink });
+        console.log('formdata',formData)
+      } else {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      }
     }
   }
 
@@ -127,7 +144,6 @@ ContributionForm.propTypes = {
   group: PropTypes.object.isRequired,
   cancel: PropTypes.func.isRequired,
   topic: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   addContribution: PropTypes.func.isRequired,
 }
 

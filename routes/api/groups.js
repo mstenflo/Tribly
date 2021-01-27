@@ -6,7 +6,6 @@ const CodeGenerator = require('node-code-generator');
 
 const User = require('../../models/User');
 const Group = require('../../models/Group');
-const { findById } = require('../../models/User');
 
 router.get('/', [auth], async (req, res) => {
   try {
@@ -103,14 +102,14 @@ router.post('/:id/comment', [auth], async (req, res) => {
 router.post('/:id/topic', auth, async (req, res) => {
   try {
     const group = await Group.findById(req.params.id);
-
+    
     if (!group) {
       return res.status(400).json({ msg: 'Group not found' });
     }
-
+    
     const profile = await Profile.findOne({ user: req.user.id });
     const user = await User.findById(req.user.id);
-
+    
     const newTopic = {
       author: {
         id: req.user.id,
@@ -120,7 +119,7 @@ router.post('/:id/topic', auth, async (req, res) => {
       title: req.body.title,
       text: req.body.text
     }
-
+    
     group.topics.unshift(newTopic);
     await group.save();
 
@@ -131,32 +130,27 @@ router.post('/:id/topic', auth, async (req, res) => {
   }
 });
 
-router.post('/:groupId/topic/:topicId/contribution', auth, async (req, res) => {
+router.post('/:groupId/topic/:topicId/comment', auth, async (req, res) => {
   try {
     const group = await Group.findById(req.params.groupId);
-
+    
     if (!group) {
       return res.status(400).json({ msg: 'Group not found' });
     }
-
+    
     const profile = await Profile.findOne({ user: req.user.id });
     const user = await User.findById(req.user.id);
 
-    const newContribution = {
+    const newComment = {
       author: {
         id: req.user.id,
         name: user.name,
-        avatar: profile.avatar
+        avatar: profile.avatar,
       },
-      title: req.body.title,
-      text: req.body.text,
-      filetype: req.body.filetype,
-      file: req.body.file,
-      youtube: req.body.youtube,
-      link: req.body.link
+      text: req.body.comment
     }
 
-    const update = { $push: { "topics.$[topic].contributions": newContribution } };
+    const update = { $push: { "topics.$[topic].comments": newComment } };
     const options = {
       arrayFilters: [
         {
@@ -166,11 +160,53 @@ router.post('/:groupId/topic/:topicId/contribution', auth, async (req, res) => {
     }
     const res = await group.updateOne(update, options);
 
-    res.json(res);
+    res.json(newComment);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-})
+});
+
+// router.post('/:groupId/topic/:topicId/contribution', auth, async (req, res) => {
+//   try {
+//     const group = await Group.findById(req.params.groupId);
+
+//     if (!group) {
+//       return res.status(400).json({ msg: 'Group not found' });
+//     }
+
+//     const profile = await Profile.findOne({ user: req.user.id });
+//     const user = await User.findById(req.user.id);
+
+//     const newContribution = {
+//       author: {
+//         id: req.user.id,
+//         name: user.name,
+//         avatar: profile.avatar
+//       },
+//       title: req.body.title,
+//       text: req.body.text,
+//       filetype: req.body.filetype,
+//       file: req.body.file,
+//       youtube: req.body.youtube,
+//       link: req.body.link
+//     }
+
+//     const update = { $push: { "topics.$[topic].contributions": newContribution } };
+//     const options = {
+//       arrayFilters: [
+//         {
+//           "topic._id": req.params.topicId
+//         }
+//       ]
+//     }
+//     await group.updateOne(update, options);
+
+//     res.json(group);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server Error');
+//   }
+// })
 
 module.exports = router;

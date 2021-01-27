@@ -8,7 +8,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/group';
 
-const CommentForm = ({ addComment, cancel, group, history }) => {
+const CommentForm = ({ addComment, cancel, group, history, topic = {} }) => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
 
   const handleEditorChange = (state) => {
@@ -18,7 +18,7 @@ const CommentForm = ({ addComment, cancel, group, history }) => {
   const onSubmit = e => {
     e.preventDefault();
     const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    addComment(group._id, htmlText, history);
+    addComment(group._id, topic._id, htmlText, history);
     cancel();
   }
 
@@ -43,6 +43,7 @@ CommentForm.propTypes = {
   addComment: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
+  topic: PropTypes.string.isRequired,
 }
 
 export default connect(null, { addComment })(CommentForm)

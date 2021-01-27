@@ -86,22 +86,26 @@ export const createGroup = (formData, history, edit = false) => async dispatch =
   }
 }
 
-export const addComment = (id, comment, history) => async dispatch => {
+export const addComment = (groupId, topicId, comment, history) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const res = await axios.post(`/api/groups/${id}/comment`, { comment }, config);
-
-    dispatch({
-      type: ADD_GROUP_COMMENT,
-      payload: res.data
-    });
+     
+    if (topicId) {
+      const res = await axios.post(`/api/groups/${groupId}/topic/${topicId}/comment`, { comment }, config);
+    } else {
+      const res = await axios.post(`/api/groups/${groupId}/comment`, { comment }, config);
+      dispatch({
+        type: ADD_GROUP_COMMENT,
+        payload: res.data
+      });
+    }
 
     dispatch(setAlert('Comment added', 'success'));
-    history.push(`/group/${id}`)
+    history.push(`/group/${groupId}`)
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,
@@ -117,6 +121,7 @@ export const addTopic = (id, formData, history) => async dispatch => {
         'Content-Type': 'application/json'
       }
     }
+
     const res = await axios.post(`/api/groups/${id}/topic`, formData, config);
 
     dispatch({
@@ -127,31 +132,6 @@ export const addTopic = (id, formData, history) => async dispatch => {
     dispatch(setAlert('Topic added', 'success'));
 
     history.push(`/group/${id}`);
-  } catch (err) {
-    dispatch({
-      type: GROUP_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
-    });
-  }
-}
-
-export const addContribution = (groupId, topicId, formData, history) => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    const res = await axios.post(`/api/groups/${groupId}/topic/${topicId}/contribution`, formData, config);
-
-    dispatch({
-      type: ADD_CONTRIBUTION,
-      payload: res.data
-    });
-
-    dispatch(setAlert('Contribution has been added', 'success'));
-
-    history.push(`/group/${groupId}`);
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,

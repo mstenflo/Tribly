@@ -2,9 +2,32 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ContributionSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users'
+  author: {
+    name: {
+      type: String
+    },
+    id: {
+      type: String
+    },
+    avatar: {
+      type: String
+    }
+  },
+  group: {
+    name: {
+      type: String
+    },
+    id: {
+      type: String
+    }
+  },
+  topic: {
+    title: {
+      type: String
+    },
+    id: {
+      type: String
+    }
   },
   link: {
     type: String
@@ -16,7 +39,14 @@ const ContributionSchema = new Schema({
     type: String,
     required: true
   },
-  description: {
+  text: {
+    type: String,
+    required: true
+  },
+  filetype: {
+    type: String,
+  },
+  youtube: {
     type: String
   },
   likes: [
@@ -29,19 +59,20 @@ const ContributionSchema = new Schema({
   ],
   comments: [
     {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+      author: {
+        name: {
+          type: String
+        },
+        id: {
+          type: String
+        },
+        avatar: {
+          type: String
+        }
       },
       text: {
         type: String,
         required: true
-      },
-      name: {
-        type: String
-      },
-      avatar: {
-        type: String
       },
       date: {
         type: Date,

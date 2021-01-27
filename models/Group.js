@@ -66,67 +66,66 @@ const GroupSchema = new Schema({
           }
         }
       ],
-      contributions: [
-        {
-          author: {
-            name: {
-              type: String
-            },
-            id: {
-              type: String
-            },
-            avatar: {
-              type: String
-            }
-          },
-          title: {
-            type: String
-          },
-          text: {
-            type: String
-          },
-          file: {
-            type: String,
-          },
-          filetype: {
-            type: String,
-            required: true
-          },
-          youtube: {
-            type: String
-          },
-          link: {
-            type: String
-          },
-          date: {
-            type: Date,
-            default: Date.now
-          },
-          comments: [
-            {
-              author: {
-                name: {
-                  type: String
-                },
-                id: {
-                  type: String
-                },
-                avatar: {
-                  type: String
-                }
-              },
-              text: {
-                type: String,
-                required: true
-              },
-              date: {
-                type: Date,
-                default: Date.now
-              }
-            }
-          ],
-        }
-      ],
+      // contributions: [
+      //   {
+      //     author: {
+      //       name: {
+      //         type: String
+      //       },
+      //       id: {
+      //         type: String
+      //       },
+      //       avatar: {
+      //         type: String
+      //       }
+      //     },
+      //     title: {
+      //       type: String
+      //     },
+      //     text: {
+      //       type: String
+      //     },
+      //     file: {
+      //       type: String,
+      //     },
+      //     filetype: {
+      //       type: String,
+      //     },
+      //     youtube: {
+      //       type: String
+      //     },
+      //     link: {
+      //       type: String
+      //     },
+      //     date: {
+      //       type: Date,
+      //       default: Date.now
+      //     },
+      //     comments: [
+      //       {
+      //         author: {
+      //           name: {
+      //             type: String
+      //           },
+      //           id: {
+      //             type: String
+      //           },
+      //           avatar: {
+      //             type: String
+      //           }
+      //         },
+      //         text: {
+      //           type: String,
+      //           required: true
+      //         },
+      //         date: {
+      //           type: Date,
+      //           default: Date.now
+      //         }
+      //       }
+      //     ],
+      //   }
+      // ],
     }
   ],
   comments: [
