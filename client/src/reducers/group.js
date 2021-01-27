@@ -5,7 +5,6 @@ import {
   GET_GROUPS,
   ADD_GROUP_COMMENT,
   ADD_GROUP_TOPIC,
-  ADD_CONTRIBUTION
 } from '../actions/types';
 
 const initialState = {

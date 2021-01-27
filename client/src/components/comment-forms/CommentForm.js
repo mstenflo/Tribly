@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-// import { convertToHTML } from 'draft-convert';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/group';
 
-const CommentForm = ({ addComment, cancel, group, history, topic = {} }) => {
+const CommentForm = ({ addComment, cancel, group, topic = {} }) => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
 
   const handleEditorChange = (state) => {
@@ -18,7 +17,7 @@ const CommentForm = ({ addComment, cancel, group, history, topic = {} }) => {
   const onSubmit = e => {
     e.preventDefault();
     const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    addComment(group._id, topic._id, htmlText, history);
+    addComment(group._id, topic._id, htmlText);
     cancel();
   }
 

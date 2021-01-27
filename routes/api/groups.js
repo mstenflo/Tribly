@@ -130,6 +130,23 @@ router.post('/:id/topic', auth, async (req, res) => {
   }
 });
 
+router.get('/:groupId/topic/:topicId', auth, async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.groupId);
+
+    if (!group) {
+      return res.status(400).json({ msg: 'Group not found' });
+    }
+
+    const topic = group.topics.filter(topic => String(topic._id) === req.params.topicId);
+    
+    res.json(...topic)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 router.post('/:groupId/topic/:topicId/comment', auth, async (req, res) => {
   try {
     const group = await Group.findById(req.params.groupId);
@@ -158,7 +175,8 @@ router.post('/:groupId/topic/:topicId/comment', auth, async (req, res) => {
         }
       ]
     }
-    const res = await group.updateOne(update, options);
+
+    await group.updateOne(update, options);
 
     res.json(newComment);
   } catch (err) {
@@ -166,47 +184,5 @@ router.post('/:groupId/topic/:topicId/comment', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-
-// router.post('/:groupId/topic/:topicId/contribution', auth, async (req, res) => {
-//   try {
-//     const group = await Group.findById(req.params.groupId);
-
-//     if (!group) {
-//       return res.status(400).json({ msg: 'Group not found' });
-//     }
-
-//     const profile = await Profile.findOne({ user: req.user.id });
-//     const user = await User.findById(req.user.id);
-
-//     const newContribution = {
-//       author: {
-//         id: req.user.id,
-//         name: user.name,
-//         avatar: profile.avatar
-//       },
-//       title: req.body.title,
-//       text: req.body.text,
-//       filetype: req.body.filetype,
-//       file: req.body.file,
-//       youtube: req.body.youtube,
-//       link: req.body.link
-//     }
-
-//     const update = { $push: { "topics.$[topic].contributions": newContribution } };
-//     const options = {
-//       arrayFilters: [
-//         {
-//           "topic._id": req.params.topicId
-//         }
-//       ]
-//     }
-//     await group.updateOne(update, options);
-
-//     res.json(group);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send('Server Error');
-//   }
-// })
 
 module.exports = router;

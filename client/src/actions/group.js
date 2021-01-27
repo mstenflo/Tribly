@@ -8,7 +8,8 @@ import {
   GET_GROUPS,
   ADD_GROUP_COMMENT,
   ADD_GROUP_TOPIC,
-  ADD_CONTRIBUTION
+  ADD_TOPIC_COMMENT,
+  GET_TOPIC_DATA
 } from './types';
 
 export const getGroups = () => async dispatch => {
@@ -86,7 +87,7 @@ export const createGroup = (formData, history, edit = false) => async dispatch =
   }
 }
 
-export const addComment = (groupId, topicId, comment, history) => async dispatch => {
+export const addComment = (groupId, topicId, comment) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -96,6 +97,11 @@ export const addComment = (groupId, topicId, comment, history) => async dispatch
      
     if (topicId) {
       const res = await axios.post(`/api/groups/${groupId}/topic/${topicId}/comment`, { comment }, config);
+      
+      dispatch({
+        type: ADD_TOPIC_COMMENT,
+        payload: res.data
+      });
     } else {
       const res = await axios.post(`/api/groups/${groupId}/comment`, { comment }, config);
       dispatch({
@@ -105,7 +111,6 @@ export const addComment = (groupId, topicId, comment, history) => async dispatch
     }
 
     dispatch(setAlert('Comment added', 'success'));
-    history.push(`/group/${groupId}`)
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,
@@ -132,6 +137,22 @@ export const addTopic = (id, formData, history) => async dispatch => {
     dispatch(setAlert('Topic added', 'success'));
 
     history.push(`/group/${id}`);
+  } catch (err) {
+    dispatch({
+      type: GROUP_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
+
+export const getTopicData = (groupId, topicId) => async dispatch => {
+  try {
+    const res = await axios.get(`/api/groups/${groupId}/topic/${topicId}`)
+
+    dispatch({
+      type: GET_TOPIC_DATA,
+      payload: res.data
+    })
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,

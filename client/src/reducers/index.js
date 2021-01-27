@@ -4,11 +4,13 @@ import auth from './auth';
 import profile from './profile';
 import group from './group';
 import contribution from './contribution';
+import topic from './topic';
 
 export default combineReducers({
   alert,
   auth,
   profile,
   group,
-  contribution
+  contribution,
+  topic
 });

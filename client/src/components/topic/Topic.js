@@ -1,16 +1,27 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types'
 import DOMPurify from 'dompurify';
-import { getGroup } from '../../actions/group'
+import { getGroup, getTopicData } from '../../actions/group'
 import { getContributions } from '../../actions/contribution';
 import { connect } from 'react-redux'
 import ContributionActions from '../contributions/ContributionActions'
 import Contributions from '../contributions/Contributions';
+import Comments from '../comments/Comments';
 
-const Topic = ({ getGroup, getContributions, match, group: { group }, history, contribution: { contributions } }) => {
+const Topic = ({
+  topic: { topic },
+  getGroup,
+  getTopicData,
+  getContributions,
+  match,
+  group: { group },
+  history,
+  contribution: { contributions }
+}) => {
   useEffect(() => {
     getContributions(match.params.topicId);
     getGroup(match.params.id);
+    getTopicData(match.params.id, match.params.topicId)
   }, [getGroup, match.params.id, match.params.topicId]);
 
   const createMarkup = (html) => {
@@ -18,14 +29,6 @@ const Topic = ({ getGroup, getContributions, match, group: { group }, history, c
       __html: DOMPurify.sanitize(html)
     }
   }
-  
-  const getTopic = id => {
-    if (!group || !group.topics || group.topics.length === 0) return null;
-
-    return group.topics.filter(topic => topic._id === id)[0]
-  }
-  
-  const topic = getTopic(match.params.topicId)
 
   return group && topic ?
     <div>
@@ -35,6 +38,7 @@ const Topic = ({ getGroup, getContributions, match, group: { group }, history, c
       <div className="mb-1"></div>
       <ContributionActions group={group} topic={topic} history={history} />
       <Contributions contributions={contributions} />
+      <Comments comments={topic.comments} />
     </div> : <h1>Topic not found</h1>
 }
 
@@ -44,11 +48,14 @@ Topic.propTypes = {
   match: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
   contribution: PropTypes.object.isRequired,
+  getTopicData: PropTypes.func.isRequired,
+  topic: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
   group: state.group,
-  contribution: state.contribution
+  contribution: state.contribution,
+  topic: state.topic
 })
 
-export default connect(mapStateToProps, { getGroup, getContributions })(Topic)
+export default connect(mapStateToProps, { getGroup, getContributions, getTopicData })(Topic)

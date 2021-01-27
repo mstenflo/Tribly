@@ -19,7 +19,7 @@ router.post('/:groupId/topic/:topicId', auth, async (req, res) => {
   try {
     const group = await Group.findById(req.params.groupId);
 
-     if (!group) {
+    if (!group) {
       return res.status(400).json({ msg: 'Group not found' });
     }
 

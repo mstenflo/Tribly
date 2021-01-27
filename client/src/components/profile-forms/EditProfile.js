@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import S3FileUpload from 'react-s3';
+import S3Config from '../../config';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
 
@@ -26,10 +27,10 @@ const EditProfile = ({
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   const config = {
-    bucketName: process.env.S3Bucket,
-    region: process.env.S3Region,
-    accessKeyId: process.env.S3AccessKeyID,
-    secretAccessKey: process.env.S3SecretAccessKey
+    bucketName: S3Config.S3Bucket,
+    region: S3Config.S3Region,
+    accessKeyId: S3Config.S3AccessKeyID,
+    secretAccessKey: S3Config.S3SecretAccessKey
   }
   
   useEffect(() => {
@@ -70,7 +71,12 @@ const EditProfile = ({
           alert(err);
         });
     } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      if (e.target.name === 'website') {
+        const weblink = e.target.value.includes('http') ? e.target.value : 'http://' + e.target.value;
+        setFormData({ ...formData, website: weblink });
+      } else {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      }
     }
   }
 
