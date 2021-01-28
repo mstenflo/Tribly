@@ -8,8 +8,8 @@ import './Navbar.css';
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
-      {/* <li><Link to="/profiles">Contributors</Link></li>
-      <li>
+      <li><Link to="/profiles">Friends</Link></li>
+      {/* <li>
       <Link to="/dashboard">
           <span className="hide-sm">{user && user.name}</span>
         </Link>

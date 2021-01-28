@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import ContributionActions from '../contributions/ContributionActions'
 import Contributions from '../contributions/Contributions';
 import Comments from '../comments/Comments';
+import { Link } from 'react-router-dom';
 
 const Topic = ({
   topic: { topic },
@@ -32,7 +33,9 @@ const Topic = ({
 
   return group && topic ?
     <div>
-      <h1 className="large text-primary">{group.name}</h1>
+      <Link to={`/group/${group._id}`}>
+        <h1 className="large text-primary">{group.name}</h1>
+      </Link>
       <h1>{topic.title}</h1>
       <div className="mb-1" dangerouslySetInnerHTML={createMarkup(topic.text)}></div>
       <div className="mb-1"></div>

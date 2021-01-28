@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import { convertToHTML } from 'draft-convert';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { createGroup } from '../../actions/group';
@@ -16,18 +15,12 @@ const GroupForm = ({ createGroup, history }) => {
   });
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
-  const  [convertedContent, setConvertedContent] = useState(null);
 
   const handleEditorChange = (state) => {
     setEditorState(state);
-    convertContentToHTML();
-  }
-  const convertContentToHTML = () => {
-    let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-    setConvertedContent(currentContentAsHTML);
   }
 
-  const { name, description } = formData;
+  const { name } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 

@@ -18,7 +18,7 @@ const Contributions = ({ contributions }) => {
 }
 
 Contributions.propTypes = {
-
+  contributions: PropTypes.array.isRequired,
 }
 
 export default Contributions
