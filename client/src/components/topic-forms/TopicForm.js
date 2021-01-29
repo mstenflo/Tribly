@@ -40,9 +40,12 @@ const TopicForm = ({ cancel, group, history, addTopic }) => {
           type="text"
           name="title"
           value={title}
-          placeholder="Enter a title for your topic"
+          placeholder="Enter a title"
           onChange={e => onChange(e)}
         />
+        <small className='form-text'>
+          Give your topic a short title
+        </small>
       </div>
       <div className="form-group">
         <Editor
@@ -52,6 +55,9 @@ const TopicForm = ({ cancel, group, history, addTopic }) => {
           editorClassName="editor-class"
           toolbarClassName="toolbar-class"
         />
+        <small className='form-text'>
+          Tell us what your goals are for this topic
+        </small>
       </div>
       <input type="submit" className="btn btn-primary" />
       <div className="btn btn-light my-1" onClick={() => cancel()}>Cancel</div>

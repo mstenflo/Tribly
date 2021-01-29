@@ -6,7 +6,7 @@
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
-  --background-color: #bebebe
+  --background-color: #bebebe;
 }
 
 * {
@@ -39,6 +39,9 @@ img {
   width: 100%;
 }
 
+.tribly-font {
+  font-family: 'Comfortaa', sans-serif;
+}
 
 /* Utilities */
 
@@ -197,7 +200,7 @@ img {
 }
 
 .btn:hover {
-  opacity: 0.9;
+  opacity: 0.95;
   box-shadow: 2px 2px #999 inset 
 }
 
@@ -273,6 +276,12 @@ img {
   border: #ccc solid 1px;
 }
 
+.spinner {
+  width: 200px;
+  margin: auto;
+  display: block;
+  background-color: var(--background-color);
+}
 
 /* Forms */
 

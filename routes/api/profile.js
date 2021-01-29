@@ -112,8 +112,32 @@ router.delete('/', auth, async (req, res) => {
 
     res.json({ msg: 'User deleted' });
     res.json(profiles);
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+router.post('/:profileId/group', auth, async (req, res) => {
+  try {
+    const profile = Profile.findById(req.params.profileId);
+
+    if (!profile) {
+      return res.status(400).json({ msg: 'Profile not found' });
+    }
+    
+    const group = Group.findById(req.body.groupId);
+
+    if (!group) {
+      return res.status(400).json({ msg: 'Group not found' });
+    }
+
+    profile.groups.push({ _id: group._id, name: group.name, description: group.description });
+
+    await profile.save();
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });

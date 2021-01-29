@@ -7,7 +7,13 @@ import GroupActions from './GroupActions';
 import Comments from '../comments/Comments';
 import Topics from '../topics/Topics';
 
-const Group = ({ match, getGroup, group: { group }, history }) => {
+const Group = ({ 
+  match,
+  getGroup,
+  group: { group },
+  history
+}) => {
+  
   useEffect(() => {
     getGroup(match.params.id);
   }, [getGroup, match.params.id]);
@@ -17,7 +23,7 @@ const Group = ({ match, getGroup, group: { group }, history }) => {
       __html: DOMPurify.sanitize(html)
     }
   }
-  
+
   return (
     group ? 
       <div>
@@ -33,12 +39,13 @@ const Group = ({ match, getGroup, group: { group }, history }) => {
 
 Group.propTypes = {
   getGroup: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-  group: state.group
+  group: state.group,
 })
 
 export default connect(mapStateToProps, { getGroup })(Group);

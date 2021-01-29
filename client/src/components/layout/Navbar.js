@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import './Navbar.css';
 
-const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li><Link to="/profiles">Friends</Link></li>
@@ -32,7 +32,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
   return (
     <nav className="navbar">
-      <h1>
+      <h1 className="tribly-font">
         <Link to="/">
           tribly
         </Link>

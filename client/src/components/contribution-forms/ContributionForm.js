@@ -72,15 +72,21 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
           value={title}
           onChange={e => onChange(e)}
         />
+        <small className='form-text'>
+          Give your contribution a title
+        </small>
       </div>
       <div className="form-group">
         <textarea
-          placeholder="Tell us about your contribution"
+          placeholder="describe your contribution"
           rows="5"
           name="text"
           value={text}
           onChange={e => onChange(e)}
         />
+        <small className='form-text'>
+          Tell us something about your contribution
+        </small>
       </div>
       {
         loadingFile ? <div>
@@ -91,14 +97,11 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
         </div> : null
       }
       <div className="form-group">
-        <select name="filetype" onChange={e => onChange(e)} defaultValue="">
-          <option value="" disabled>-- Select File Type --</option>
-          <option value="image/*">Image</option>
-          <option value="video/*">Video</option>
-          <option value="audio/*">Audio</option>
-          <option value="youtube">Youtube Link</option>
-          <option value="link">Web Link</option>
-        </select>
+        <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'image/*' })}>Image</div>
+        <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'video/*' })}>Video</div>
+        <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'audio/*' })}>Audio</div>
+        <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'youtube' })}>Youtube</div>
+        <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'link' })}>Link</div>
       </div>
       <div className="form-group">
         {
@@ -107,7 +110,7 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
               onClick={() => setLoadingFile(true)}
               type="file"
               name="file"
-              accept="image/*, video/*, audio/*"
+              accept={filetype}
               onChange={e => onChange(e)}
             />
         }
@@ -124,7 +127,7 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
           filetype === 'youtube' &&
           <input
             type="text"
-            placeholder="Enter the videoId (not the entire link)"
+            placeholder="Enter the id for the video (not the entire link)"
             name={filetype}
             onChange={e => onChange(e)}
           />

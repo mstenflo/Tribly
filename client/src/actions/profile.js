@@ -86,3 +86,33 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     });
   }
 }
+
+export const joinGroup = (groupId, profileId) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const res = await axios.post(`/api/profile/${profileId}/group`, { groupId }, config);
+    
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+    
+    dispatch(setAlert('Group Added', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}
