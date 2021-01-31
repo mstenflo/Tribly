@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom'
+import { joinGroup } from '../../actions/profile';
+import { connect } from 'react-redux';
 
-const GroupItem = ({ group }) => {
+const GroupItem = ({ group, profile, joinGroup, history }) => {
   const id = group.id || group._id
 
   const createMarkup = (html) => {
@@ -11,14 +13,20 @@ const GroupItem = ({ group }) => {
       __html: DOMPurify.sanitize(html)
     }
   }
-  
+
   return (
     group ? 
       <div className="group bg-light">
-        <div>
-          <Link to={`/group/${id}`}>
-            <h2>{group.name}</h2>
-          </Link>
+        <div style={{width: '100%'}}>
+          <div className="flexit">
+            <Link to={`/group/${id}`}>
+              <h2>{group.name}</h2>
+            </Link>
+            {
+              profile && profile.groups && profile.groups.filter(group => group._id === id).length === 0 && 
+              <div onClick={() => joinGroup(id, profile._id, history)} className="btn btn-primary">Join</div>
+            }
+          </div>
           <div dangerouslySetInnerHTML={createMarkup(group.description)}></div>
         </div>
       </div> : null
@@ -27,6 +35,9 @@ const GroupItem = ({ group }) => {
 
 GroupItem.propTypes = {
   group: PropTypes.object.isRequired,
+  profile: PropTypes.object,
+  joinGroup: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-export default GroupItem
+export default connect(null, { joinGroup })(GroupItem)

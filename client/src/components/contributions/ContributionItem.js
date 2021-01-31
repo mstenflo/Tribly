@@ -4,17 +4,7 @@ import ReactPlayer from 'react-player'
 import ImgsViewer from 'react-images-viewer'
 
 const ContributionItem = ({ contribution: { title, text, file, author, filetype, youtube, link } }) => {
-  const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
-
-  const openLightbox = () => {
-    setViewerIsOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setCurrentImage(0);
-    setViewerIsOpen(false);
-  };
 
   return (
     <div>
@@ -32,7 +22,7 @@ const ContributionItem = ({ contribution: { title, text, file, author, filetype,
             </div> : filetype === 'image/*' ? 
               <div>
                 <div className="contribution-image-container" onClick={() => setViewerIsOpen(true)}>
-                  <img src={file} alt="image" onClick={() => setViewerIsOpen(true)} />
+                  <img src={file} alt="" onClick={() => setViewerIsOpen(true)} />
                   <ImgsViewer
                     imgs={[{ src: file }]}
                     showThumbnails

@@ -1,15 +1,23 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getGroups } from '../../actions/group'
+import { getCurrentProfile } from '../../actions/profile'
 import { connect } from 'react-redux'
 import Spinner from '../layout/Spinner'
 import GroupItem from './GroupItem'
 
-const Groups = ({ getGroups, group: { loading, groups } }) => {
+const Groups = ({
+  getGroups,
+  getCurrentProfile,
+  profile: { profile },
+  group: { loading, groups },
+  history
+}) => {
   useEffect(() => {
     getGroups();
-  }, [getGroups]);
-
+    getCurrentProfile();
+  }, [getGroups, getCurrentProfile]);
+  
   return (
     <Fragment>
       {
@@ -21,7 +29,7 @@ const Groups = ({ getGroups, group: { loading, groups } }) => {
               {
                 groups.length > 0 ? 
                   groups.map(group => (
-                    <GroupItem key={group._id} group={group} />
+                    <GroupItem profile={profile} key={group._id} group={group} history={history} />
                   )) : <h4>No Groups found</h4>
               }
             </div>
@@ -33,11 +41,14 @@ const Groups = ({ getGroups, group: { loading, groups } }) => {
 
 Groups.propTypes = {
   getGroups: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-  group: state.group
+  profile: state.profile,
+  group: state.group,
 })
 
-export default connect(mapStateToProps, { getGroups })(Groups);
+export default connect(mapStateToProps, { getGroups, getCurrentProfile })(Groups);

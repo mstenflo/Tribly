@@ -126,16 +126,15 @@ router.post('/:profileId/group', auth, async (req, res) => {
       return res.status(400).json({ msg: 'Profile not found' });
     }
     
-    const group = Group.findById(req.body.groupId);
+    const group = await Group.findById(req.body.groupId).populate('Group', ['_id', 'name', 'description']);
 
     if (!group) {
       return res.status(400).json({ msg: 'Group not found' });
     }
 
-    profile.groups.push({ _id: group._id, name: group.name, description: group.description });
+    await profile.updateOne({ $push: { groups: { _id: group._id, name: group.name, description: group.description } } })
 
-    await profile.save();
-    res.json(profile);
+    res.json(req.body.groupId);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

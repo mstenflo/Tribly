@@ -10,6 +10,7 @@ import GroupItem from '../groups/GroupItem';
 const Dashboard = ({
   getCurrentProfile,
   profile: { profile, loading },
+  history
 }) => {
   useEffect(() => {
     getCurrentProfile();
@@ -34,9 +35,9 @@ const Dashboard = ({
         {
           profile && profile.groups && profile.groups.length > 0 ? 
               profile.groups.map(group => (
-                <GroupItem key={group._id} group={group} />
+                <GroupItem key={group._id} group={group} profile={profile} history={history} />
             )) :
-            <p>no groups</p>
+            <p>You have not joined any Groups yet</p>
         }
       </Fragment>
     )
@@ -45,6 +46,7 @@ const Dashboard = ({
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({

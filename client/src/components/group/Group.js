@@ -39,7 +39,6 @@ const Group = ({
 
 Group.propTypes = {
   getGroup: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
 }

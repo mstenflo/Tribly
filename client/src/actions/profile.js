@@ -87,7 +87,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
   }
 }
 
-export const joinGroup = (groupId, profileId) => async dispatch => {
+export const joinGroup = (groupId, profileId, history) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -95,21 +95,12 @@ export const joinGroup = (groupId, profileId) => async dispatch => {
       }
     }
 
-    const res = await axios.post(`/api/profile/${profileId}/group`, { groupId }, config);
-    
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data
-    });
-    
-    dispatch(setAlert('Group Added', 'success'));
-  } catch (err) {
-    const errors = err.response.data.errors;
-    
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
+    await axios.post(`/api/profile/${profileId}/group`, { groupId }, config);
 
+    history.push(`/group/${groupId}`)
+
+    dispatch(setAlert('You are now a member of this group', 'success'));
+  } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

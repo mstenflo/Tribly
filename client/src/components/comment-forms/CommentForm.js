@@ -48,7 +48,7 @@ CommentForm.propTypes = {
   addComment: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
-  topic: PropTypes.object.isRequired,
+  topic: PropTypes.object,
 }
 
 export default connect(null, { addComment })(CommentForm)
