@@ -13,6 +13,11 @@ const TopicForm = ({ cancel, group, history, addTopic }) => {
     text: ''
   });
 
+  const editorOptions = {
+    options: ['inline', 'fontSize', 'list', 'colorPicker', 'link', 'emoji'],
+    inline: { options: ['bold', 'italic', 'strikethrough'] },
+  }
+
   const { title } = formData;
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
@@ -49,6 +54,7 @@ const TopicForm = ({ cancel, group, history, addTopic }) => {
       </div>
       <div className="form-group">
         <Editor
+          toolbar={editorOptions}
           editorState={editorState}
           onEditorStateChange={handleEditorChange}
           wrapperClassName="wrapper-class"

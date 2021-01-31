@@ -10,6 +10,11 @@ import { addComment } from '../../actions/group';
 const CommentForm = ({ addComment, cancel, group, topic = {} }) => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
 
+  const editorOptions = {
+    options: ['inline', 'fontSize', 'list', 'colorPicker', 'link', 'emoji'],
+    inline: { options: ['bold', 'italic', 'strikethrough'] },
+  }
+  
   const handleEditorChange = (state) => {
     setEditorState(state);
   }
@@ -25,6 +30,7 @@ const CommentForm = ({ addComment, cancel, group, topic = {} }) => {
     <form className="form" onSubmit={e => onSubmit(e)}>
       <div className="from-group">
         <Editor
+          toolbar={editorOptions}
           editorState={editorState}
           onEditorStateChange={handleEditorChange}
           wrapperClassName="wrapper-class"

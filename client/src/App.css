@@ -508,9 +508,7 @@ input[type='file'] {
 }
 
 .wrapper-class {
-  /* padding: 0.2rem; */
   border: 1px solid #999;
-  /* border-radius: 0.5rem; */
   background-color: var(--light-color);
   box-shadow: 2px 2px #999;
 }
@@ -521,11 +519,9 @@ input[type='file'] {
   margin: 0.5rem;
   border: 1px solid #ccc;
   color: #000;
-  /* border-radius: 0.5rem; */
 }
 
 .toolbar-class {
-  /* border-radius: 0.5rem; */
   border-bottom: 1px solid #ccc;
 }
 

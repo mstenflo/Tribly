@@ -14,6 +14,11 @@ const GroupForm = ({ createGroup, history }) => {
     description: ''
   });
 
+  const editorOptions = {
+    options: ['inline', 'fontSize', 'list', 'colorPicker', 'link', 'emoji'],
+    inline: { options: ['bold', 'italic', 'strikethrough'] },
+  }
+
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
 
   const handleEditorChange = (state) => {
@@ -43,6 +48,7 @@ const GroupForm = ({ createGroup, history }) => {
         </div>
         <div className="form-group">
           <Editor
+            toolbar={editorOptions}
             editorState={editorState}
             onEditorStateChange={handleEditorChange}
             wrapperClassName="wrapper-class"
