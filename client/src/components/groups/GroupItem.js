@@ -17,14 +17,14 @@ const GroupItem = ({ group, profile, joinGroup, history }) => {
   return (
     group ? 
       <div className="group bg-light">
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
           <div className="flexit">
             <Link to={`/group/${id}`}>
               <h2>{group.name}</h2>
             </Link>
             {
-              profile && profile.groups && profile.groups.filter(group => group._id === id).length === 0 && 
-              <div onClick={() => joinGroup(id, profile._id, history)} className="btn btn-primary">Join</div>
+              profile && profile.groups && profile.groups.filter(grp => grp._id === id).length === 0 && 
+              <div onClick={() => joinGroup(group, profile, history)} className="btn btn-primary">Join</div>
             }
           </div>
           <div dangerouslySetInnerHTML={createMarkup(group.description)}></div>

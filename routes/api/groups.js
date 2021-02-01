@@ -29,9 +29,11 @@ router.post('/', [auth, [
     const howMany = 1;
     const options = {};
     const newCode = code.generateCodes(pattern, howMany, options);
-    
+
+    const user = await User.findById(req.user.id);
+
     const newGroup = new Group({
-      admin: req.user.id,
+      admin: { id: req.user.id, name: user.name },
       name: req.body.name,
       description: req.body.description,
       inviteCode: newCode[0],

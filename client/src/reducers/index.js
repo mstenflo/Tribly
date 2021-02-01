@@ -5,6 +5,7 @@ import profile from './profile';
 import group from './group';
 import contribution from './contribution';
 import topic from './topic';
+import latest from './latest';
 
 export default combineReducers({
   alert,
@@ -12,5 +13,6 @@ export default combineReducers({
   profile,
   group,
   contribution,
-  topic
+  topic,
+  latest
 });

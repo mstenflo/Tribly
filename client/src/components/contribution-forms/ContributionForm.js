@@ -96,6 +96,7 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
           }
         </div> : null
       }
+      <h3>Upload or link a file</h3>
       <div className="form-group">
         <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'image/*' })}>Image</div>
         <div className="btn btn-light" onClick={() => setFormData({ ...formData, filetype: 'video/*' })}>Video</div>
@@ -105,7 +106,8 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
       </div>
       <div className="form-group">
         {
-          (filetype === 'image/*' || filetype === 'video/*' || filetype === 'audio/*') &&
+          filetype === 'image/*' &&
+          <div style={{display: 'flex'}}>
             <input
               onClick={() => setLoadingFile(true)}
               type="file"
@@ -113,6 +115,34 @@ const ContributionForm = ({ group, cancel, topic, addContribution }) => {
               accept={filetype}
               onChange={e => onChange(e)}
             />
+            <p>Upload an Image</p>
+          </div>
+        }
+        {
+          filetype === 'video/*' &&
+          <div style={{display: 'flex'}}>
+            <input
+              onClick={() => setLoadingFile(true)}
+              type="file"
+              name="file"
+              accept={filetype}
+              onChange={e => onChange(e)}
+            />
+            <p>Upload a Video</p>
+          </div>
+        }
+        {
+          filetype === 'audio/*' &&
+          <div style={{display: 'flex'}}>
+            <input
+              onClick={() => setLoadingFile(true)}
+              type="file"
+              name="file"
+              accept={filetype}
+              onChange={e => onChange(e)}
+            />
+            <p>Upload an Audio file</p>
+          </div>
         }
         {
           filetype === 'link' &&

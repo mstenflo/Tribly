@@ -25,8 +25,8 @@ router.post('/:groupId/topic/:topicId', auth, async (req, res) => {
 
     const profile = await Profile.findOne({ user: req.user.id });
     const user = await User.findById(req.user.id);
-    const topic = group.topics.filter(topic => topic._id === req.params.topicId);
-
+    const topic = group.topics.filter(topic => String(topic._id) === req.params.topicId);
+  
     const newContribution = new Contribution({
       author: {
         id: req.user.id,
@@ -38,7 +38,7 @@ router.post('/:groupId/topic/:topicId', auth, async (req, res) => {
         id: req.params.groupId
       },
       topic: {
-        title: topic.title,
+        title: topic[0].title,
         id: req.params.topicId
       },
       title: req.body.title,
@@ -48,7 +48,6 @@ router.post('/:groupId/topic/:topicId', auth, async (req, res) => {
       youtube: req.body.youtube,
       link: req.body.link
     });
-
     const contribution = await newContribution.save();
 
     res.json(contribution);

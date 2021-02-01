@@ -32,6 +32,13 @@ export const addContribution = (groupId, topicId, formData) => async dispatch =>
 
     const res = await axios.post(`/api/contributions/${groupId}/topic/${topicId}`, formData, config);
 
+    const latest = {
+      type: 'contribution',
+      data: res.data
+    }
+
+    await axios.post('/api/latest', latest, config)
+    
     dispatch({
       type: ADD_CONTRIBUTION,
       payload: res.data

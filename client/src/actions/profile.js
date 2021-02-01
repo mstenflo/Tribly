@@ -65,6 +65,13 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 
     const res = await axios.post('/api/profile', formData, config);
 
+    const latest = {
+      type: 'profile',
+      data: res.data
+    }
+
+    await axios.post('/api/latest', latest, config)
+
     dispatch({
       type: GET_PROFILE,
       payload: res.data
@@ -87,17 +94,23 @@ export const createProfile = (formData, history, edit = false) => async dispatch
   }
 }
 
-export const joinGroup = (groupId, profileId, history) => async dispatch => {
+export const joinGroup = (group, profile, history) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
+    await axios.post(`/api/profile/${profile._id}/group`, group, config);
 
-    await axios.post(`/api/profile/${profileId}/group`, { groupId }, config);
+    const latest = {
+      type: 'joingroup',
+      data: { group, profile }
+    }
 
-    history.push(`/group/${groupId}`)
+    await axios.post('/api/latest', latest, config)
+
+    history.push(`/group/${group._id}`)
 
     dispatch(setAlert('You are now a member of this group', 'success'));
   } catch (err) {

@@ -6,6 +6,7 @@ import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import DashboardActions from './DashboardActions';
 import GroupItem from '../groups/GroupItem';
+import Latest from '../latest/Latest';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -34,11 +35,17 @@ const Dashboard = ({
           )}
         {
           profile && profile.groups && profile.groups.length > 0 ? 
+            <div>
+              <h1 className="text-primary">My Groups</h1>
+              {
               profile.groups.map(group => (
                 <GroupItem key={group._id} group={group} profile={profile} history={history} />
-            )) :
+            ))
+              }
+            </div> :
             <p>You have not joined any Groups yet</p>
         }
+        <Latest />
       </Fragment>
     )
   }

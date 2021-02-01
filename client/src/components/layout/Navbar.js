@@ -8,6 +8,7 @@ import './Navbar.css';
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
+      <li><Link to="/groups">Find Groups</Link></li>
       <li><Link to="/profiles">Friends</Link></li>
       {/* <li>
       <Link to="/dashboard">

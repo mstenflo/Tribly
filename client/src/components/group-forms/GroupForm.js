@@ -21,8 +21,11 @@ const GroupForm = ({ createGroup, history }) => {
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
 
-  const handleEditorChange = (state) => {
+  const handleEditorChange = state => {
     setEditorState(state);
+
+    const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    setFormData({ ...formData, description: htmlText });
   }
 
   const { name } = formData;
@@ -31,9 +34,6 @@ const GroupForm = ({ createGroup, history }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-    
-    setFormData({ ...formData, description: htmlText });
     
     createGroup(formData, history)
   }

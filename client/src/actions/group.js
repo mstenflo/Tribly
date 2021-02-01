@@ -71,6 +71,13 @@ export const createGroup = (formData, history, edit = false) => async dispatch =
 
     const res = await axios.post('/api/groups', formData, config);
 
+    const latest = {
+      type: 'newgroup',
+      data: res.data
+    }
+
+    await axios.post('/api/latest', latest, config)
+    
     dispatch({
       type: ADD_GROUP,
       payload: res.data
@@ -87,7 +94,7 @@ export const createGroup = (formData, history, edit = false) => async dispatch =
   }
 }
 
-export const addComment = (groupId, topicId, comment) => async dispatch => {
+export const addComment = (group, topic, comment) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -95,15 +102,30 @@ export const addComment = (groupId, topicId, comment) => async dispatch => {
       }
     }
      
-    if (topicId) {
-      const res = await axios.post(`/api/groups/${groupId}/topic/${topicId}/comment`, { comment }, config);
+    if (topic._id) {
+      const res = await axios.post(`/api/groups/${group._id}/topic/${topic._id}/comment`, { comment }, config);
+
+      const latest = {
+        type: 'topiccomment',
+        data: { comment: res.data, group, topic }
+      }
+
+      await axios.post('/api/latest', latest, config);
       
       dispatch({
         type: ADD_TOPIC_COMMENT,
         payload: res.data
       });
     } else {
-      const res = await axios.post(`/api/groups/${groupId}/comment`, { comment }, config);
+      const res = await axios.post(`/api/groups/${group._id}/comment`, { comment }, config);
+
+      const latest = {
+        type: 'groupcomment',
+        data: { comment: res.data, group }
+      }
+
+      await axios.post('/api/latest', latest, config)
+      
       dispatch({
         type: ADD_GROUP_COMMENT,
         payload: res.data
@@ -119,7 +141,7 @@ export const addComment = (groupId, topicId, comment) => async dispatch => {
   }
 }
 
-export const addTopic = (id, formData, history) => async dispatch => {
+export const addTopic = (group, formData, history) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -127,7 +149,14 @@ export const addTopic = (id, formData, history) => async dispatch => {
       }
     }
 
-    const res = await axios.post(`/api/groups/${id}/topic`, formData, config);
+    const res = await axios.post(`/api/groups/${group._id}/topic`, formData, config);
+
+    const latest = {
+      type: 'newtopic',
+      data: {topic: res.data, group}
+    }
+
+    await axios.post('/api/latest', latest, config)
 
     dispatch({
       type: ADD_GROUP_TOPIC,
@@ -136,7 +165,7 @@ export const addTopic = (id, formData, history) => async dispatch => {
 
     dispatch(setAlert('Topic added', 'success'));
 
-    history.push(`/group/${id}`);
+    history.push(`/group/${group._id}`);
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,

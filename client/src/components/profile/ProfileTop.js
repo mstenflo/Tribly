@@ -7,13 +7,15 @@ const ProfileTop = ({ profile: {
   social,
   avatar,
   user: { name }
-}}) => {
+} }) => {
+  
+  const profileImg = avatar || 'https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png'
   return (
     <div className="profile-top bg-dark p-2">
       <div className="profile-img-container">
         <img
           // className="round-img my-1"
-          src={avatar}
+          src={profileImg}
           alt=""
         />
       </div>

@@ -34,7 +34,7 @@ const TopicForm = ({ cancel, group, history, addTopic }) => {
     e.preventDefault();
     const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     const data = {text: htmlText, title}
-    addTopic(group._id, data, history);
+    addTopic(group, data, history);
     cancel();
   }
   

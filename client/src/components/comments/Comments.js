@@ -11,7 +11,7 @@ const Comments = ({ comments }) => {
           {
             comments.map(comment => (
               <div key={comment._id}>
-                <CommentItem comment={comment} />
+                <CommentItem comment={comment} key={comment._id} />
               </div>
             ))
           }

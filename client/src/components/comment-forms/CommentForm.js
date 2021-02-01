@@ -22,7 +22,7 @@ const CommentForm = ({ addComment, cancel, group, topic = {} }) => {
   const onSubmit = e => {
     e.preventDefault();
     const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    addComment(group._id, topic._id, htmlText);
+    addComment(group, topic, htmlText);
     cancel();
   }
 
