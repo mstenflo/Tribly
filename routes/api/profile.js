@@ -23,11 +23,12 @@ router.get('/me', auth, async (req, res) => {
 
 router.post('/', [auth], async (req, res) => {
   const errors = validationResult(req);
+  
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   
-  const user = (await User.findById(req.user.id)).populate('user', ['name']);
+  const user = await User.findById(req.user.id).populate('user', ['name']);
 
   if (!user) {
     return res.status(400).json({ msg: 'No user found' });
@@ -35,6 +36,7 @@ router.post('/', [auth], async (req, res) => {
   
   const {
     website,
+    name,
     avatar,
     location,
     bio,
@@ -47,7 +49,7 @@ router.post('/', [auth], async (req, res) => {
 
   const profileFields = {};
   profileFields.user = req.user.id;
-  profileFields.name = user.name;
+  profileFields.name = name || user.name;
   if (website) profileFields.website = website;
   if (avatar) profileFields.avatar = avatar;
   if (location) profileFields.location = location;
