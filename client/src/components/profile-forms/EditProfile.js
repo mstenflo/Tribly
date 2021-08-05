@@ -30,9 +30,9 @@ const EditProfile = ({
     bucketName: S3Config.S3Bucket,
     region: S3Config.S3Region,
     accessKeyId: S3Config.S3AccessKeyID,
-    secretAccessKey: S3Config.S3SecretAccessKey
-  }
-  
+    secretAccessKey: S3Config.S3SecretAccessKey,
+  };
+
   useEffect(() => {
     getCurrentProfile();
 
@@ -64,21 +64,23 @@ const EditProfile = ({
   const onChange = (e) => {
     if (e.target.files) {
       S3FileUpload.uploadFile(e.target.files[0], config, { mode: 'no-cors' })
-        .then(data => {
+        .then((data) => {
           setFormData({ ...formData, avatar: data.location });
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err);
         });
     } else {
       if (e.target.name === 'website') {
-        const weblink = e.target.value.includes('http') ? e.target.value : 'http://' + e.target.value;
+        const weblink = e.target.value.includes('http')
+          ? e.target.value
+          : 'http://' + e.target.value;
         setFormData({ ...formData, website: weblink });
       } else {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       }
     }
-  }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -87,21 +89,25 @@ const EditProfile = ({
 
   return (
     <Fragment>
-      <div className="flexit">
+      <div className='flexit'>
         <h1 className='large text-primary'>Edit Your Profile</h1>
-        <div className="avatar">
-          {
-            !avatar ?
-              <img src={`https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png`} alt="avatar" /> : 
-              <img src={avatar} id="avatar" alt="avatar"/>
-          }
+        <div className='avatar'>
+          {!avatar ? (
+            <img
+              src={`https://tribly.s3-us-west-1.amazonaws.com/avatar_default.png`}
+              alt='avatar'
+            />
+          ) : (
+            <img src={avatar} id='avatar' alt='avatar' />
+          )}
           <input
-            type="file"
-            name="profilepic"
-            id="profilepic"
-            accept="image/*"
-            onChange={e => onChange(e)}
-            placeholder="add an image" />
+            type='file'
+            name='profilepic'
+            id='profilepic'
+            accept='image/*'
+            onChange={(e) => onChange(e)}
+            placeholder='add an image'
+          />
         </div>
       </div>
       <p className='lead'>
@@ -227,7 +233,7 @@ EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
