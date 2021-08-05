@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
@@ -10,72 +10,74 @@ import { connect } from 'react-redux';
 const TopicForm = ({ cancel, group, history, addTopic }) => {
   const [formData, setFormData] = useState({
     title: '',
-    text: ''
+    text: '',
   });
 
   const editorOptions = {
     options: ['inline', 'fontSize', 'list', 'colorPicker', 'link', 'emoji'],
     inline: { options: ['bold', 'italic', 'strikethrough'] },
-  }
+  };
 
   const { title } = formData;
 
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
   const handleEditorChange = (state) => {
     setEditorState(state);
-  }
+  };
 
-  const onChange = e => {
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-  
-  const onSubmit = e => {
+  };
+
+  const onSubmit = (e) => {
     e.preventDefault();
     const htmlText = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    const data = {text: htmlText, title}
+    const data = { text: htmlText, title };
     addTopic(group, data, history);
     cancel();
-  }
-  
+  };
+
   return (
-    <form className="form" onSubmit={e => onSubmit(e)}>
-      <div className="form-group">
+    <form className='form' onSubmit={(e) => onSubmit(e)}>
+      <div className='form-group'>
         <input
-          type="text"
-          name="title"
+          type='text'
+          name='title'
           value={title}
-          placeholder="Enter a title"
-          onChange={e => onChange(e)}
+          placeholder='Enter a title'
+          onChange={(e) => onChange(e)}
         />
-        <small className='form-text'>
-          Give your topic a short title
-        </small>
+        <small className='form-text'>Give your topic a short title</small>
       </div>
-      <div className="form-group">
+      <div className='form-group'>
         <Editor
           toolbar={editorOptions}
           editorState={editorState}
           onEditorStateChange={handleEditorChange}
-          wrapperClassName="wrapper-class"
-          editorClassName="editor-class"
-          toolbarClassName="toolbar-class"
+          wrapperClassName='wrapper-class'
+          editorClassName='editor-class'
+          toolbarClassName='toolbar-class'
         />
         <small className='form-text'>
           Tell us what your goals are for this topic
         </small>
       </div>
-      <input type="submit" className="btn btn-primary" />
-      <div className="btn btn-light my-1" onClick={() => cancel()}>Cancel</div>
+      <input type='submit' className='btn btn-primary' />
+      <div className='btn btn-light my-1' onClick={() => cancel()}>
+        Cancel
+      </div>
     </form>
-  )
-}
+  );
+};
 
 TopicForm.propTypes = {
   cancel: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   addTopic: PropTypes.func.isRequired,
-}
+};
 
 export default connect(null, { addTopic })(TopicForm);

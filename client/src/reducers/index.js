@@ -14,5 +14,5 @@ export default combineReducers({
   group,
   contribution,
   topic,
-  latest
+  latest,
 });

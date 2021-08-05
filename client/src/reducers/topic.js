@@ -1,11 +1,9 @@
-import {
-  ADD_TOPIC_COMMENT, GET_TOPIC_DATA
-} from '../actions/types';
+import { ADD_TOPIC_COMMENT, GET_TOPIC_DATA } from '../actions/types';
 
 const initialState = {
   topic: { comments: [] },
   loading: false,
-  error: {}
+  error: {},
 };
 
 export default function topic(state = initialState, action) {
@@ -17,15 +15,15 @@ export default function topic(state = initialState, action) {
         ...state,
         topic: {
           ...state.topic,
-          comments: [payload, ...state.topic.comments]
+          comments: [payload, ...state.topic.comments],
         },
-        loading: false
-      }
+        loading: false,
+      };
     case GET_TOPIC_DATA:
       return {
         ...state,
-        topic: payload
-      }
+        topic: payload,
+      };
     default:
       return state;
   }

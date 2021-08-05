@@ -1,75 +1,74 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const GroupSchema = new Schema({
+const GroupSchema = new mongoose.Schema({
   admin: {
     name: {
-      type: String
+      type: String,
     },
     id: {
-      type: Schema.Types.ObjectId,
-      ref: 'users'
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users',
+    },
   },
   contributors: [String],
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   inviteCode: {
     type: String,
-    required: true
+    required: true,
   },
   topics: [
     {
       author: {
         name: {
-          type: String
+          type: String,
         },
         id: {
-          type: String
+          type: String,
         },
         avatar: {
-          type: String
-        }
+          type: String,
+        },
       },
       title: {
         type: String,
-        required: true
+        required: true,
       },
       text: {
-        type: String
+        type: String,
       },
       date: {
         type: Date,
-        default: Date.now
+        default: Date.now,
       },
       comments: [
         {
           author: {
             name: {
-              type: String
+              type: String,
             },
             id: {
-              type: String
+              type: String,
             },
             avatar: {
-              type: String
-            }
+              type: String,
+            },
           },
           text: {
             type: String,
-            required: true
+            required: true,
           },
           date: {
             type: Date,
-            default: Date.now
-          }
-        }
+            default: Date.now,
+          },
+        },
       ],
       // contributions: [
       //   {
@@ -131,35 +130,37 @@ const GroupSchema = new Schema({
       //     ],
       //   }
       // ],
-    }
+    },
   ],
   comments: [
     {
       author: {
         name: {
-          type: String
+          type: String,
         },
         id: {
-          type: String
+          type: String,
         },
         avatar: {
-          type: String
-        }
+          type: String,
+        },
       },
       text: {
         type: String,
-        required: true
+        required: true,
       },
       date: {
         type: Date,
-        default: Date.now
-      }
-    }
+        default: Date.now,
+      },
+    },
   ],
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = Group = mongoose.model('groups', GroupSchema);
+const Group = mongoose.model('groups', GroupSchema);
+
+module.exports = Group;

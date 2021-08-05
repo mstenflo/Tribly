@@ -1,14 +1,14 @@
 import {
   GET_CONTRIBUTIONS,
   CONTRIBUTION_ERROR,
-  ADD_CONTRIBUTION
+  ADD_CONTRIBUTION,
 } from '../actions/types';
 
 const initialState = {
   contributions: [],
   contribution: null,
   loading: false,
-  error: {}
+  error: {},
 };
 
 export default function contribution(state = initialState, action) {
@@ -19,22 +19,21 @@ export default function contribution(state = initialState, action) {
       return {
         ...state,
         contributions: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case ADD_CONTRIBUTION:
       return {
         ...state,
         contributions: [...state.contributions, payload],
-        loading: false
-      }
+        loading: false,
+      };
     case CONTRIBUTION_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false
-      }
+        loading: false,
+      };
     default:
-      return state
+      return state;
   }
 }
-

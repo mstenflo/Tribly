@@ -1,14 +1,19 @@
 const express = require('express');
-const router = express.Router();
-const auth = require('../../middleware/auth');
 const { validationResult } = require('express-validator');
+const auth = require('../../middleware/auth');
+
+const router = express.Router();
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Group = require('../../models/Group');
 
 router.get('/me', auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate('User', ['name', 'avatar']);
+    const profile = await Profile.findOne({ user: req.user.id }).populate(
+      'User',
+      ['name', 'avatar']
+    );
 
     if (!profile) {
       return res.status(400).json({ msg: 'There is no profile for this user' });
@@ -23,17 +28,17 @@ router.get('/me', auth, async (req, res) => {
 
 router.post('/', [auth], async (req, res) => {
   const errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  
+
   const user = await User.findById(req.user.id).populate('user', ['name']);
 
   if (!user) {
     return res.status(400).json({ msg: 'No user found' });
   }
-  
+
   const {
     website,
     name,
@@ -68,9 +73,12 @@ router.post('/', [auth], async (req, res) => {
   try {
     let profile = await Profile.findOne({ user: req.user.id });
 
-
     if (profile) {
-      profile = await Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true });
+      profile = await Profile.findOneAndUpdate(
+        { user: req.user.id },
+        { $set: profileFields },
+        { new: true }
+      );
 
       return res.json(profile);
     }
@@ -96,7 +104,9 @@ router.get('/', async (req, res) => {
 
 router.get('/user/:user_id', async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar'], 'user');
+    const profile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate('user', ['name', 'avatar'], 'user');
 
     if (!profile) {
       return res.status(400).json({ msg: 'Profile not found' });
@@ -118,7 +128,7 @@ router.delete('/', auth, async (req, res) => {
     await User.findOneAndRemove({ _id: req.user.id });
 
     res.json({ msg: 'User deleted' });
-    res.json(profiles);
+    // res.json(profiles);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -132,14 +142,26 @@ router.post('/:profileId/group', auth, async (req, res) => {
     if (!profile) {
       return res.status(400).json({ msg: 'Profile not found' });
     }
-    
-    const group = await Group.findById(req.body).populate('Group', ['_id', 'name', 'description']);
-    
+
+    const group = await Group.findById(req.body).populate('Group', [
+      '_id',
+      'name',
+      'description',
+    ]);
+
     if (!group) {
       return res.status(400).json({ msg: 'Group not found' });
     }
 
-    await profile.updateOne({ $push: { groups: { _id: group._id, name: group.name, description: group.description } } })
+    await profile.updateOne({
+      $push: {
+        groups: {
+          _id: group._id,
+          name: group.name,
+          description: group.description,
+        },
+      },
+    });
 
     res.json(req.body.groupId);
   } catch (err) {

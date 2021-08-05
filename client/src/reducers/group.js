@@ -11,7 +11,7 @@ const initialState = {
   groups: [],
   group: null,
   loading: false,
-  error: {}
+  error: {},
 };
 
 export default function group(state = initialState, action) {
@@ -22,44 +22,44 @@ export default function group(state = initialState, action) {
       return {
         ...state,
         groups: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case GET_GROUP:
       return {
         ...state,
         group: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case ADD_GROUP:
       return {
         ...state,
         groups: [payload, ...state.groups],
-        loading: false
-      }
+        loading: false,
+      };
     case GROUP_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case ADD_GROUP_COMMENT:
       return {
         ...state,
-        group: { 
+        group: {
           ...state.group,
-          comments: [payload, ...state.group.comments]
+          comments: [payload, ...state.group.comments],
         },
-        loading: false
-      }
+        loading: false,
+      };
     case ADD_GROUP_TOPIC:
       return {
         ...state,
         group: {
           ...state.group,
-          topics: [payload, ...state.group.topics]
+          topics: [payload, ...state.group.topics],
         },
-        loading: false
-      }
+        loading: false,
+      };
     default:
       return state;
   }

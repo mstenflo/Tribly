@@ -1,89 +1,90 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const ContributionSchema = new Schema({
+const ContributionSchema = new mongoose.Schema({
   author: {
     name: {
-      type: String
+      type: String,
     },
     id: {
-      type: String
+      type: String,
     },
     avatar: {
-      type: String
-    }
+      type: String,
+    },
   },
   group: {
     name: {
-      type: String
+      type: String,
     },
     id: {
-      type: String
-    }
+      type: String,
+    },
   },
   topic: {
     title: {
-      type: String
+      type: String,
     },
     id: {
-      type: String
-    }
+      type: String,
+    },
   },
   link: {
-    type: String
+    type: String,
   },
   file: {
-    type: String
+    type: String,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   text: {
     type: String,
-    required: true
+    required: true,
   },
   filetype: {
     type: String,
   },
   youtube: {
-    type: String
+    type: String,
   },
   likes: [
     {
       user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-      }
-    }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    },
   ],
   comments: [
     {
       author: {
         name: {
-          type: String
+          type: String,
         },
         id: {
-          type: String
+          type: String,
         },
         avatar: {
-          type: String
-        }
+          type: String,
+        },
       },
       text: {
         type: String,
-        required: true
+        required: true,
       },
       date: {
         type: Date,
-        default: Date.now
-      }
-    }
+        default: Date.now,
+      },
+    },
   ],
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = Contribution = mongoose.model('contribution', ContributionSchema);
+const Contribution = mongoose.model('contribution', ContributionSchema);
+
+module.exports = Contribution;

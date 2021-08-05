@@ -1,10 +1,10 @@
-import { GET_LATEST, LATEST_ERROR } from "../actions/types";
+import { GET_LATEST, LATEST_ERROR } from '../actions/types';
 
 const initialState = {
   latest: null,
   loading: true,
-  error: {}
-}
+  error: {},
+};
 
 export default function latest(state = initialState, action) {
   const { type, payload } = action;
@@ -14,16 +14,16 @@ export default function latest(state = initialState, action) {
       return {
         ...state,
         latest: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case LATEST_ERROR:
       return {
         ...state,
         latest: null,
         loading: false,
-        error: payload
-      }
+        error: payload,
+      };
     default:
-      return state
+      return state;
   }
 }

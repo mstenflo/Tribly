@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
@@ -17,24 +17,28 @@ import NotFound from '../layout/NotFound';
 
 const Routes = () => {
   return (
-    <section className="container">
+    <section className='container'>
       <Alert />
       <Switch>
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <PrivateRoute exact path="/profiles" component={Profiles} />
-        <PrivateRoute exact path="/profile/:id" component={Profile} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        <PrivateRoute exact path="/create-profile" component={CreateProfile} />
-        <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-        <PrivateRoute exact path="/create-group" component={GroupForm} />
-        <PrivateRoute exact path="/groups" component={Groups} />
-        <PrivateRoute exact path="/group/:id" component={Group} />
-        <PrivateRoute exact path="/group/:id/topic/:topicId" component={Topic} />
+        <Route exact path='/register' component={Register} />
+        <Route exact path='/login' component={Login} />
+        <PrivateRoute exact path='/profiles' component={Profiles} />
+        <PrivateRoute exact path='/profile/:id' component={Profile} />
+        <PrivateRoute exact path='/dashboard' component={Dashboard} />
+        <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+        <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+        <PrivateRoute exact path='/create-group' component={GroupForm} />
+        <PrivateRoute exact path='/groups' component={Groups} />
+        <PrivateRoute exact path='/group/:id' component={Group} />
+        <PrivateRoute
+          exact
+          path='/group/:id/topic/:topicId'
+          component={Topic}
+        />
         <Route component={NotFound} />
       </Switch>
     </section>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;
